@@ -27,7 +27,33 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
 @media(max-width:600px){.top{gap:10px}.brand{font-size:13px}.search{order:3;max-width:none;flex-basis:100%}.hero{margin:18px 12px;padding:38px 22px;min-height:300px}.wrap{padding:0 14px}.section-head h2{font-size:21px}}
 </style>
 </head>
-<body>
+<body><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "sb_publishable_zzQxURC8KVfgmjojn-5TVQ_Afps4xcJ";
+const SUPABASE_KEY = "sb_secret_lp3Sb-zWftoEzzzttiTe_Q_4vMIDO-3";
+
+const db = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+// Tester la connexion
+async function testerConnexion() {
+  try {
+    const { data, error } = await db
+      .from("test")
+      .select("*")
+      .limit(1);
+
+    if (error) throw error;
+
+    console.log("Connexion réussie !");
+  } catch (error) {
+    console.error("Erreur :", error.message);
+  }
+}
+</script>
 <header>
  <div class="top">
   <a class="brand" href="#"><span class="logo">∞</span><span>AU-DELÀ DE<br><span>L'IMAGINATION</span></span></a>
