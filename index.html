@@ -1,1 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AU-DELÀ DE L'IMAGINATION : vidéos, images, créations et inspirations extraordinaires.">
+<title>AU-DELÀ DE L'IMAGINATION</title>
+<style>
+:root{--bg:#071225;--panel:#101f38;--panel2:#142844;--blue:#168bff;--gold:#f5c451;--text:#f4f7fc;--muted:#a9b8cc}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+a{color:inherit;text-decoration:none}button,input,textarea{font:inherit}
+header{position:sticky;top:0;z-index:10;background:#071225ed;border-bottom:1px solid #ffffff18;backdrop-filter:blur(12px)}
+.top{max-width:1180px;margin:auto;padding:14px 20px;display:flex;align-items:center;gap:18px;justify-content:space-between;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.5px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--gold),#fff0b5);color:#09162a;display:grid;place-items:center;font-size:25px}
+.brand span:last-child{color:var(--gold)}.search{flex:1;max-width:390px;display:flex;background:#fff;border-radius:30px;overflow:hidden}.search input{width:100%;border:0;padding:12px 16px;outline:0}.search button{border:0;background:var(--blue);color:white;padding:0 18px;cursor:pointer}
+.admin{background:var(--gold);color:#152039;border:0;border-radius:24px;padding:11px 17px;font-weight:bold;cursor:pointer}
+nav{max-width:1180px;margin:auto;padding:0 20px 13px;display:flex;gap:22px;overflow:auto;white-space:nowrap;color:#c5d1e0;font-size:14px}nav a:hover{color:var(--gold)}
+.hero{max-width:1180px;margin:28px auto;padding:55px 30px;min-height:340px;border-radius:25px;overflow:hidden;position:relative;background:linear-gradient(90deg,#08152bf5 10%,#08152bc9 55%,#08152b30),radial-gradient(circle at 80% 30%,#267bd6,#17294a 40%,#071225 75%);border:1px solid #ffffff20}
+.hero:after{content:"✦";position:absolute;right:9%;top:15px;font-size:190px;color:#f5c45130;transform:rotate(15deg)}
+.hero-content{position:relative;z-index:1;max-width:650px}.eyebrow{color:var(--gold);font-weight:bold;letter-spacing:3px;font-size:12px}.hero h1{font-size:clamp(34px,6vw,58px);line-height:1.04;margin:15px 0}.hero p{font-size:17px;line-height:1.6;color:#d0dbea;max-width:560px}.primary{display:inline-block;margin-top:13px;background:linear-gradient(90deg,var(--gold),#ffe49a);color:#14213a;padding:14px 22px;border-radius:30px;font-weight:800}
+.wrap{max-width:1180px;margin:35px auto;padding:0 20px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:18px}.section-head h2{margin:0;font-size:25px}.section-head p{margin:6px 0 0;color:var(--muted);font-size:14px}
+.categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px}.category{background:linear-gradient(145deg,var(--panel2),var(--panel));border:1px solid #ffffff12;padding:19px 14px;border-radius:17px;text-align:center;cursor:pointer;transition:.2s}.category:hover,.category.active{border-color:var(--gold);transform:translateY(-3px)}.category b{display:block;margin-top:8px;font-size:14px}.category .icon{font-size:27px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}.card{background:var(--panel);border:1px solid #ffffff12;border-radius:18px;overflow:hidden}.search-result-card{cursor:pointer;transition:transform .18s,border-color .18s}.search-result-card:hover{transform:translateY(-3px);border-color:var(--gold)}.detail-media{width:100%;max-height:55vh;object-fit:contain;background:#061020;border-radius:12px}.detail-box{width:min(700px,100%)}.thumb{height:155px;display:grid;place-items:center;background:linear-gradient(135deg,#17477b,#111d38 60%,#74511b);font-size:54px}.card-body{padding:16px}.tag{font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1px}.card h3{margin:8px 0;font-size:18px}.card p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}.actions{display:flex;gap:10px;align-items:center;margin-top:15px;flex-wrap:wrap}.actions button{border:1px solid #ffffff25;background:#172b49;color:white;border-radius:20px;padding:8px 12px;cursor:pointer}.actions button:hover{border-color:var(--gold)}.comments{margin-top:12px;display:none}.comments.show{display:block}.comments input{width:100%;padding:10px;border:1px solid #ffffff20;background:#08172b;color:white;border-radius:9px;margin-bottom:7px}.comments button{background:var(--blue);border:0;color:white;border-radius:9px;padding:8px 12px;cursor:pointer}.comment-list{font-size:13px;color:#cbd7e7;margin-top:8px}
+.follow{padding:30px;border-radius:20px;background:linear-gradient(110deg,#123a68,#14233d);border:1px solid #ffffff18;text-align:center}.follow h2{margin-top:0}.follow p{color:var(--muted)}
+footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-align:center;color:var(--muted);font-size:13px}footer strong{color:var(--gold)}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:30;place-items:center;padding:18px}.modal.open{display:grid}.box{width:min(440px,100%);max-height:90vh;overflow-y:auto;background:#10213a;border:1px solid #ffffff25;border-radius:18px;padding:23px}.box h2{margin-top:0}.box input,.box textarea{width:100%;padding:12px;margin:7px 0;background:#071629;border:1px solid #ffffff25;border-radius:9px;color:white}.box textarea{min-height:90px}.box button{padding:11px 15px;border:0;border-radius:9px;background:var(--gold);font-weight:bold;cursor:pointer;margin:5px 5px 0 0}.box .close{background:#263b58;color:white}.notice{font-size:12px;color:#ffda8a;line-height:1.5}.admin-tools{display:none;margin:18px 0;padding:16px;border:1px solid #f5c45166;border-radius:14px;background:#0b1a30}.admin-tools.active{display:block}.admin-tools h3{margin:0 0 12px;color:var(--gold)}.admin-tools button,.manage-actions button{background:#263b58;color:white;border:1px solid #ffffff25;border-radius:9px;padding:8px 11px;margin:4px;cursor:pointer}.manage-actions{display:none;margin-top:10px}.admin-mode .manage-actions{display:block}.field-label{display:block;margin-top:10px;color:#f5c451;font-size:13px;font-weight:bold}
+@media(max-width:600px){.top{gap:10px}.brand{font-size:13px}.search{order:3;max-width:none;flex-basis:100%}.hero{margin:18px 12px;padding:38px 22px;min-height:300px}.wrap{padding:0 14px}.section-head h2{font-size:21px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="top">
+  <a class="brand" href="#"><span class="logo">∞</span><span>AU-DELÀ DE<br><span>L'IMAGINATION</span></span></a>
+  <form class="search" id="searchForm"><input id="searchInput" type="search" placeholder="Rechercher une vidéo, une image..."><button>⌕</button></form>
+ </div>
+ <nav><a href="#accueil">Accueil</a><a href="#videos">Vidéos</a><a href="#images">Images</a><a href="#actualites">Actualités</a><a href="#apropos">À propos</a><a href="#contact">Contact</a></nav>
+</header>
+<main id="accueil">
+ <section class="hero">
+  <div class="hero-content"><div class="eyebrow">BIENVENUE DANS NOTRE UNIVERS</div><h1>AU-DELÀ DE<br>L'IMAGINATION</h1><p>Découvrez un univers extraordinaire de vidéos, d'images, d'histoires et d'inspirations. Ici, la créativité n'a pas de limites !</p><a class="primary" href="#decouvrir">Explorer maintenant&nbsp; →</a></div>
+ </section>
+ <section class="wrap" id="decouvrir">
+  <div class="section-head"><div><h2>Explorez nos univers</h2><p>Choisissez une catégorie et laissez-vous surprendre.</p></div></div>
+  <div class="categories">
+   <div class="category active" data-filter="tout"><span class="icon">🌟</span><b>Tout découvrir</b></div>
+   <div class="category" data-filter="Vidéos IA"><span class="icon">🎬</span><b>Vidéos IA</b></div>
+   <div class="category" data-filter="Humour"><span class="icon">😂</span><b>Humour</b></div>
+   <div class="category" data-filter="Actualités"><span class="icon">📰</span><b>Actualités</b></div>
+   <div class="category" data-filter="Créations artistiques"><span class="icon">🎨</span><b>Créations artistiques</b></div>
+   <div class="category" data-filter="Histoires"><span class="icon">📖</span><b>Histoires extraordinaires</b></div>
+  </div>
+ </section>
+ <section class="wrap" id="videos">
+  <div class="section-head"><div><h2>Dernières publications</h2><p>Les contenus à découvrir sur notre page.</p></div></div>
+  <div class="grid" id="postGrid">
+   <article class="card" data-category="Vidéos IA"><div class="thumb">🎥</div><div class="card-body"><span class="tag">Vidéos IA</span><h3>Un monde sans limites</h3><p>Imaginez, créez et découvrez des scènes extraordinaires.</p><div class="actions"><button class="like">♡ J'aime <span>0</span></button><button class="comment-toggle">💬 Commenter</button></div><div class="comments"><input placeholder="Votre nom"><input placeholder="Votre commentaire"><button class="send-comment">Envoyer</button><div class="comment-list"></div></div></div></article>
+   <article class="card" data-category="Humour"><div class="thumb">😄</div><div class="card-body"><span class="tag">Humour</span><h3>Un moment de sourire</h3><p>Un peu de bonne humeur pour illuminer votre journée.</p><div class="actions"><button class="like">♡ J'aime <span>0</span></button><button class="comment-toggle">💬 Commenter</button></div><div class="comments"><input placeholder="Votre nom"><input placeholder="Votre commentaire"><button class="send-comment">Envoyer</button><div class="comment-list"></div></div></div></article>
+   <article class="card" data-category="Créations artistiques"><div class="thumb">✨</div><div class="card-body"><span class="tag">Créations artistiques</span><h3>La créativité en action</h3><p>Des idées originales qui donnent vie à l'imagination.</p><div class="actions"><button class="like">♡ J'aime <span>0</span></button><button class="comment-toggle">💬 Commenter</button></div><div class="comments"><input placeholder="Votre nom"><input placeholder="Votre commentaire"><button class="send-comment">Envoyer</button><div class="comment-list"></div></div></div></article>
+  </div>
+ </section>
+ <section class="wrap" id="images"><div class="section-head"><div><h2>Galerie d'images</h2><p>Un aperçu de notre univers visuel.</p></div></div><div class="grid"><div class="card"><div class="thumb">🌌</div><div class="card-body"><span class="tag">Inspiration</span><h3>Rêvez plus grand</h3></div></div><div class="card"><div class="thumb">🏰</div><div class="card-body"><span class="tag">Fantaisie</span><h3>Explorez l'impossible</h3></div></div><div class="card"><div class="thumb">🚀</div><div class="card-body"><span class="tag">Innovation</span><h3>Vers de nouveaux horizons</h3></div></div></div></section>
+ <section class="wrap" id="actualites"><div class="follow">
+  <h2>❤️ Rejoignez notre univers</h2>
+  <p>Découvrez nos nouvelles publications et partagez vos impressions dans les commentaires.</p>
+  <a class="primary" href="https://www.facebook.com/Arnoldharoldk" target="_blank" rel="noopener noreferrer">🔵 S'ABONNER À NOTRE PAGE FACEBOOK</a>
+ </div></section>
+ <section class="wrap" id="apropos"><div class="section-head"><div><h2>À propos</h2><p>AU-DELÀ DE L'IMAGINATION est un espace dédié à la créativité, aux idées et aux découvertes.</p></div></div></section>
+ <section class="wrap" id="contact"><div class="follow"><h2>Rêvez. Créez. Explorez.</h2><p>Merci de visiter AU-DELÀ DE L'IMAGINATION.</p></div></section>
+</main>
+<footer>© <span id="year"></span> <strong>AU-DELÀ DE L'IMAGINATION</strong> — Tous droits réservés.</footer>
 
+<div class="modal" id="resultModal" aria-hidden="true"><div class="box detail-box"><button class="close" id="closeResult" style="float:right">Fermer ✕</button><div id="resultDetail"></div></div></div>
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+document.querySelectorAll('.like').forEach(b=>b.onclick=()=>{let s=b.querySelector('span');let n=Number(s.textContent);s.textContent=n?0:1;b.firstChild.textContent=n?'♡ J’aime ':'♥ J’aime ';});
+document.querySelectorAll('.comment-toggle').forEach(b=>b.onclick=()=>b.closest('.card-body').querySelector('.comments').classList.toggle('show'));
+document.querySelectorAll('.send-comment').forEach(b=>b.onclick=()=>{let box=b.parentElement,inputs=box.querySelectorAll('input'),name=inputs[0].value.trim(),msg=inputs[1].value.trim();if(!name||!msg){alert('Entrez votre nom et votre commentaire.');return;}let line=document.createElement('p');line.textContent=name+' : '+msg;box.querySelector('.comment-list').appendChild(line);inputs.forEach(i=>i.value='');});
+document.querySelectorAll('.category').forEach(c=>c.onclick=()=>{document.querySelectorAll('.category').forEach(x=>x.classList.remove('active'));c.classList.add('active');searchInput.value='';document.querySelectorAll('#images .card').forEach(card=>card.style.display='');document.getElementById('searchMessage')?.remove();filterPosts(c.dataset.filter);});
+function filterPosts(f){document.querySelectorAll('#postGrid .card').forEach(card=>card.style.display=f==='tout'||card.dataset.category===f?'':'none');}
+const searchInput=document.getElementById('searchInput');
+
+// Recherche classique : sans IA, sans API et sans frais.
+function normalizeSearchText(value){
+  return (value || '').toString().toLocaleLowerCase('fr')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
+}
+function getSearchCards(){
+  return [...document.querySelectorAll('#postGrid .card, #images .card')];
+}
+function runSiteSearch(shouldScroll=false){
+  const query=normalizeSearchText(searchInput.value);
+  const words=query.split(' ').filter(Boolean);
+  const cards=getSearchCards();
+  let found=0;
+
+  cards.forEach(card=>{
+    const searchable=normalizeSearchText(card.textContent);
+    const match=words.length===0 || words.every(word=>searchable.includes(word));
+    card.style.display=match ? '' : 'none';
+    card.classList.toggle('search-result-card', !!query && match);
+    card.setAttribute('tabindex', query && match ? '0' : '-1');
+    if(match && words.length) found++;
+  });
+
+  let message=document.getElementById('searchMessage');
+  if(!message){
+    message=document.createElement('p');
+    message.id='searchMessage';
+    message.setAttribute('role','status');
+    message.style.cssText='color:#f5c451;margin:12px 0;font-weight:bold';
+    document.getElementById('videos').insertBefore(message,document.getElementById('postGrid'));
+  }
+  message.textContent=words.length
+    ? (found ? found+' résultat(s) trouvé(s). Appuie sur une publication pour l’ouvrir.' : 'Aucun résultat. Essaie un autre mot-clé.')
+    : 'Entre un mot dans la barre de recherche.';
+
+  if(shouldScroll){
+    const target=message;
+    target.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+document.getElementById('searchForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  runSiteSearch(true);
+});
+searchInput.addEventListener('input',()=>runSiteSearch(false));
+
+// Ouvrir le contenu sélectionné dans une fenêtre détaillée.
+const resultModal=document.getElementById('resultModal');
+const resultDetail=document.getElementById('resultDetail');
+function openSearchResult(card){
+  resultDetail.innerHTML='';
+  const media=card.querySelector('.thumb img, .thumb video');
+  if(media){
+    const copy=media.cloneNode(true);
+    copy.className='detail-media';
+    if(copy.tagName==='VIDEO'){copy.controls=true;copy.autoplay=false;}
+    resultDetail.appendChild(copy);
+  } else {
+    const thumb=card.querySelector('.thumb');
+    if(thumb){
+      const visual=document.createElement('div');
+      visual.className='thumb';
+      visual.style.cssText='height:180px;border-radius:12px;margin:12px 0';
+      visual.textContent=thumb.textContent;
+      resultDetail.appendChild(visual);
+    }
+  }
+  const tag=card.querySelector('.tag');
+  const title=card.querySelector('h3');
+  const description=card.querySelector('p');
+  if(tag){const t=document.createElement('span');t.className='tag';t.textContent=tag.textContent;resultDetail.appendChild(t);}
+  if(title){const h=document.createElement('h2');h.textContent=title.textContent;resultDetail.appendChild(h);}
+  if(description){const p=document.createElement('p');p.textContent=description.textContent;p.style.color='var(--muted)';resultDetail.appendChild(p);}
+  resultModal.classList.add('open');
+  resultModal.setAttribute('aria-hidden','false');
+}
+document.addEventListener('click',e=>{
+  const card=e.target.closest('.search-result-card');
+  if(card && !e.target.closest('button,input,textarea')) openSearchResult(card);
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter' && e.target.classList.contains('search-result-card')) openSearchResult(e.target);
+});
+document.getElementById('closeResult').onclick=()=>{
+  resultModal.classList.remove('open');
+  resultModal.setAttribute('aria-hidden','true');
+};
+resultModal.addEventListener('click',e=>{
+  if(e.target===resultModal) resultModal.classList.remove('open');
+});
+
+// Outils d'administration de démonstration
+function addManageButtons(card){
+  if(card.querySelector('.manage-actions')) return;
+  const body=card.querySelector('.card-body') || card;
+  const bar=document.createElement('div');
+  bar.className='manage-actions';
+  const edit=document.createElement('button');edit.textContent='✏️ Modifier';
+  const del=document.createElement('button');del.textContent='🗑️ Supprimer';
+  edit.onclick=()=>{
+    const title=card.querySelector('h3');
+    const desc=card.querySelector('.card-body p');
+    const tag=card.querySelector('.tag');
+    const newTitle=prompt('Nouveau titre :',title?.textContent || '');
+    if(newTitle===null) return;
+    const newDesc=prompt('Nouvelle description :',desc?.textContent || '');
+    if(newDesc===null) return;
+    const newCat=prompt('Nouvelle catégorie :',tag?.textContent || card.dataset.category || 'Autre');
+    if(newCat===null) return;
+    if(title) title.textContent=newTitle.trim();
+    if(desc) desc.textContent=newDesc.trim();
+    if(tag) tag.textContent=newCat.trim();
+    card.dataset.category=newCat.trim();
+    renderManagePosts();
+  };
+  del.onclick=()=>{
+    if(confirm('Supprimer cette publication de cette page ?')){
+      card.remove();
+      renderManagePosts();
+      runSiteSearch(false);
+    }
+  };
+  bar.append(edit,del);body.appendChild(bar);
+}
+function renderManagePosts(){
+  const list=document.getElementById('managePostsList');
+  if(!list) return;
+  list.innerHTML='<h3 style="margin-top:18px">Publications existantes</h3>';
+  const cards=[...document.querySelectorAll('#postGrid .card, #images .card')];
+  if(!cards.length){list.innerHTML+='<p>Aucune publication.</p>';return;}
+  cards.forEach((card,index)=>{
+    addManageButtons(card);
+    const row=document.createElement('div');
+    row.style.cssText='padding:9px 0;border-bottom:1px solid #ffffff20;font-size:14px';
+    const title=card.querySelector('h3')?.textContent || 'Publication sans titre';
+    row.textContent=(index+1)+'. '+title;
+    list.appendChild(row);
+  });
+}
+document.getElementById('saveSiteSettings').onclick=()=>{
+  const title=document.getElementById('editHeroTitle').value.trim();
+  const desc=document.getElementById('editHeroText').value.trim();
+  const footer=document.getElementById('editFooterText').value.trim();
+  if(title) document.querySelector('.hero h1').textContent=title;
+  document.querySelector('.hero p').textContent=desc;
+  const footerStrong=document.querySelector('footer strong');
+  if(footerStrong) footerStrong.textContent=footer;
+  alert('Textes modifiés sur cette page. Pour conserver les changements et les publier pour tous, il faudra le serveur du site.');
+};
+document.getElementById('showManagePosts').onclick=()=>{
+  renderManagePosts();
+  document.getElementById('managePostsList').scrollIntoView({behavior:'smooth',block:'nearest'});
+};
+
+const mediaInput=document.getElementById('newMedia');
+const mediaPreview=document.getElementById('mediaPreview');
+let selectedMediaUrl='';
+mediaInput.addEventListener('change',()=>{
+  if(selectedMediaUrl) URL.revokeObjectURL(selectedMediaUrl);
+  mediaPreview.innerHTML='';
+  const file=mediaInput.files && mediaInput.files[0];
+  if(!file) return;
+  if(!file.type.startsWith('image/') && !file.type.startsWith('video/')){
+    alert('Choisissez une image ou une vidéo.');
+    mediaInput.value='';
+    return;
+  }
+  selectedMediaUrl=URL.createObjectURL(file);
+  const preview=file.type.startsWith('video/')?document.createElement('video'):document.createElement('img');
+  preview.src=selectedMediaUrl;
+  preview.style.cssText='width:100%;max-height:220px;object-fit:contain;border-radius:10px;background:#061020';
+  if(preview.tagName==='VIDEO'){preview.controls=true;preview.playsInline=true;}
+  mediaPreview.appendChild(preview);
+});
+document.getElementById('addPost').onclick=()=>{
+  const title=document.getElementById('newTitle').value.trim();
+  const desc=document.getElementById('newDescription').value.trim();
+  const cat=document.getElementById('newCategory').value;
+  const file=mediaInput.files && mediaInput.files[0];
+  if(!title){alert('Ajoutez un titre.');return;}
+  if(!file){alert('Choisissez une photo ou une vidéo.');return;}
+  const card=document.createElement('article');
+  card.className='card';card.dataset.category=cat;
+  const thumb=document.createElement('div');thumb.className='thumb';thumb.style.height='auto';thumb.style.padding='0';
+  const media=file.type.startsWith('video/')?document.createElement('video'):document.createElement('img');
+  media.src=URL.createObjectURL(file);media.style.cssText='display:block;width:100%;max-height:320px;object-fit:contain;background:#061020';
+  if(media.tagName==='VIDEO'){media.controls=true;media.playsInline=true;}
+  thumb.appendChild(media);
+  const body=document.createElement('div');body.className='card-body';
+  const tag=document.createElement('span');tag.className='tag';tag.textContent=cat;
+  const heading=document.createElement('h3');heading.textContent=title;
+  const paragraph=document.createElement('p');paragraph.textContent=desc;
+  const actions=document.createElement('div');actions.className='actions';
+  const like=document.createElement('button');like.innerHTML='♡ J’aime <span>0</span>';
+  like.onclick=()=>{const count=like.querySelector('span');count.textContent=Number(count.textContent)?0:1;};
+  actions.appendChild(like);body.append(tag,heading,paragraph,actions);card.append(thumb,body);
+  document.getElementById('postGrid').prepend(card);if(isAdminMode)addManageButtons(card);renderManagePosts();
+  document.getElementById('newTitle').value='';document.getElementById('newDescription').value='';
+  mediaInput.value='';mediaPreview.innerHTML='';selectedMediaUrl='';
+  modal.classList.remove('open');
+  alert('Publication affichée sur cette page. Elle ne sera pas encore visible chez les autres visiteurs : il faut connecter le site à un serveur pour envoyer et enregistrer les fichiers en ligne.');
+};
+</script>
+</body>
+</html>
