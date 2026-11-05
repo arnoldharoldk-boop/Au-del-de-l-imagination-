@@ -33,7 +33,7 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
 <header>
  <div class="top">
   <a class="brand" href="#"><span class="logo">∞</span><span>AU-DELÀ DE<br><span>L'IMAGINATION</span></span></a>
-  <form class="search" id="searchForm"><input id="searchInput" type="search" placeholder="Rechercher une vidéo, une image..."><button>⌕</button></form>
+  <form class="search" id="searchForm"><input id="searchInput" type="search" placeholder="Rechercher une vidéo, une image..."><button type="submit">⌕</button></form>
   <button class="admin" id="adminOpen" type="button">Espace admin</button>
  </div>
  <nav><a href="#accueil">Accueil</a><a href="#videos">Vidéos</a><a href="#images">Images</a><a href="#actualites">Actualités</a><a href="#apropos">À propos</a><a href="#contact">Contact</a></nav>
@@ -108,7 +108,10 @@ const adminOpenBtn = document.getElementById('adminOpen');
 const closeModalBtn = document.getElementById('closeModal');
 
 if(adminOpenBtn) {
-    adminOpenBtn.onclick = () => { if(modal) modal.classList.add('open'); };
+    adminOpenBtn.onclick = (e) => {
+        if(e) e.preventDefault();
+        if(modal) modal.classList.add('open');
+    };
 }
 if(closeModalBtn) {
     closeModalBtn.onclick = () => { if(modal) modal.classList.remove('open'); };
@@ -175,7 +178,6 @@ async function fetchPosts() {
             </div>
         `;
         
-        // Gestion du bouton J'aime
         const likeBtn = article.querySelector('.like');
         if(likeBtn) {
             likeBtn.onclick = () => {
@@ -191,7 +193,6 @@ async function fetchPosts() {
 }
 fetchPosts();
 
-// Interactions de base (recherche, catégories, modale de détail)
 document.querySelectorAll('.category').forEach(c => c.onclick = () => {
     document.querySelectorAll('.category').forEach(x => x.classList.remove('active'));
     c.classList.add('active');
@@ -245,7 +246,6 @@ if(searchInput) {
     searchInput.addEventListener('input', () => runSiteSearch(false));
 }
 
-// Fenêtre de détail au clic sur un élément
 const resultModal = document.getElementById('resultModal');
 const resultDetail = document.getElementById('resultDetail');
 function openSearchResult(card){
@@ -269,4 +269,5 @@ function openSearchResult(card){
   const tag = card.querySelector('.tag');
   const title = card.querySelector('h3');
   const description = card.querySelector('p');
-  if(tag){ const t = document.createElement('span'); t.className = 'tag'; t.textCo
+  if(tag){ const t = document.createElement('span'); t.className = 'tag'; t.textContent = tag.textContent; resultDetail.appendChild(t); }
+  if(title){ const h = docume
