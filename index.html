@@ -83,8 +83,8 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
       <input id="newMedia" type="file" accept="image/*,video/*" style="width:100%;padding:10px;background:#071629;color:white;border:1px solid #ffffff25;border-radius:9px">
       <div id="mediaPreview" style="margin:10px 0"></div>
       
-      <!-- BOUTON AVEC DIAGNOSTIC INTÉGRÉ -->
-      <button id="addPost" type="button" onclick="submitPostDirect()" style="width:100%;margin-top:10px;background:var(--gold);color:#152039;font-weight:bold;padding:12px;border:0;border-radius:9px;cursor:pointer;">Publier sur le serveur</button>
+      <!-- BOUTON DE PUBLICATION SANS ATTRIBUT ONCLICK -->
+      <button id="addPost" type="button" style="width:100%;margin-top:10px;background:var(--gold);color:#152039;font-weight:bold;padding:12px;border:0;border-radius:9px;cursor:pointer;">Publier sur le serveur</button>
     </div>
   </div>
 </div>
@@ -177,58 +177,64 @@ if(mediaInput) {
     });
 }
 
-// FONCTION GLOBALE AVEC PROTECTION CONTRE LES BLOCAGES SILENCIEUX
-async function submitPostDirect() {
-    try {
-        alert("Début de la fonction");
-        const title = document.getElementById('newTitle').value.trim();
-        const description = document.getElementById('newDescription').value.trim();
-        const category = document.getElementById('newCategory').value;
-        const file = mediaInput && mediaInput.files[0];
+// ECOUTEUR D'ÉVÉNEMENT ROBUSTE POUR MOBILE
+document.addEventListener('DOMContentLoaded', () => {
+    const addPostBtn = document.getElementById('addPost');
+    if (addPostBtn) {
+        addPostBtn.addEventListener('click', async () => {
+            try {
+                alert("Bouton cliqué avec succès !");
+                const title = document.getElementById('newTitle').value.trim();
+                const description = document.getElementById('newDescription').value.trim();
+                const category = document.getElementById('newCategory').value;
+                const mediaInput = document.getElementById('newMedia');
+                const file = mediaInput && mediaInput.files[0];
 
-        if (!title || !file) {
-            alert('Veuillez ajouter un titre et choisir un fichier média.');
-            return;
-        }
+                if (!title || !file) {
+                    alert('Veuillez ajouter un titre et choisir un fichier média.');
+                    return;
+                }
 
-        alert('Envoi du fichier vers Supabase...');
-        const fileName = `${Date.now()}_${file.name}`;
-        const { data: uploadData, error: uploadError } = await supabase.storage.from('media').upload(fileName, file);
+                alert('Envoi du fichier vers Supabase...');
+                const fileName = `${Date.now()}_${file.name}`;
+                const { data: uploadData, error: uploadError } = await supabase.storage.from('media').upload(fileName, file);
 
-        if (uploadError) {
-            alert('Erreur Storage : ' + uploadError.message);
-            return;
-        }
+                if (uploadError) {
+                    alert('Erreur Storage : ' + uploadError.message);
+                    return;
+                }
 
-        const { data: publicUrlData } = supabase.storage.from('media').getPublicUrl(fileName);
-        const media_url = publicUrlData.publicUrl;
-        const media_type = file.type.startsWith('video/') ? 'video' : 'image';
+                const { data: publicUrlData } = supabase.storage.from('media').getPublicUrl(fileName);
+                const media_url = publicUrlData.publicUrl;
+                const media_type = file.type.startsWith('video/') ? 'video' : 'image';
 
-        alert('Enregistrement dans la base de données...');
-        const { error: dbError } = await supabase.from('posts').insert([{
-            title,
-            description,
-            category,
-            media_url,
-            media_type
-        }]);
+                alert('Enregistrement dans la base de données...');
+                const { error: dbError } = await supabase.from('posts').insert([{
+                    title,
+                    description,
+                    category,
+                    media_url,
+                    media_type
+                }]);
 
-        if (dbError) {
-            alert('Erreur Database : ' + dbError.message);
-            return;
-        }
+                if (dbError) {
+                    alert('Erreur Database : ' + dbError.message);
+                    return;
+                }
 
-        alert('Succès total ! Publication ajoutée.');
-        document.getElementById('adminModal').classList.remove('open');
-        document.getElementById('newTitle').value = '';
-        document.getElementById('newDescription').value = '';
-        mediaInput.value = '';
-        if(mediaPreview) mediaPreview.innerHTML = '';
-        fetchPosts();
-    } catch (err) {
-        alert('Erreur critique attrapée : ' + err.message);
+                alert('Succès total ! Publication ajoutée.');
+                document.getElementById('adminModal').classList.remove('open');
+                document.getElementById('newTitle').value = '';
+                document.getElementById('newDescription').value = '';
+                mediaInput.value = '';
+                if(mediaPreview) mediaPreview.innerHTML = '';
+                fetchPosts();
+            } catch (err) {
+                alert('Erreur critique : ' + err.message);
+            }
+        });
     }
-}
+});
 
 async function deletePost(id) {
     if(confirm('Voulez-vous vraiment supprimer définitivement cette publication ?')) {
@@ -243,5 +249,5 @@ async function deletePost(id) {
 }
 </script>
 </body>
-  </html>
+ </html>
  
