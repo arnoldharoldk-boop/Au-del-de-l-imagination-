@@ -82,7 +82,9 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
       <label for="newMedia" style="display:block;margin:12px 0 8px;font-weight:bold;color:#f5c451">📷 1. Choisir une photo ou une vidéo</label>
       <input id="newMedia" type="file" accept="image/*,video/*" style="width:100%;padding:10px;background:#071629;color:white;border:1px solid #ffffff25;border-radius:9px">
       <div id="mediaPreview" style="margin:10px 0"></div>
-      <button id="addPost" type="button" style="width:100%;margin-top:10px;background:var(--gold);color:#152039;font-weight:bold;padding:12px;border:0;border-radius:9px;cursor:pointer;">Publier sur le serveur</button>
+      
+      <!-- BOUTON AVEC CLIC DIRECT INTÉGRÉ -->
+      <button id="addPost" type="button" onclick="submitPostDirect()" style="width:100%;margin-top:10px;background:var(--gold);color:#152039;font-weight:bold;padding:12px;border:0;border-radius:9px;cursor:pointer;">Publier sur le serveur</button>
     </div>
   </div>
 </div>
@@ -175,53 +177,52 @@ if(mediaInput) {
     });
 }
 
-const addPostBtn = document.getElementById('addPost');
-if(addPostBtn) {
-    addPostBtn.onclick = async () => {
-        alert("Le clic fonctionne ! Début de l'envoi...");
-        const title = document.getElementById('newTitle').value.trim();
-        const description = document.getElementById('newDescription').value.trim();
-        const category = document.getElementById('newCategory').value;
-        const file = mediaInput && mediaInput.files[0];
+// FONCTION GLOBALE DIRECTE POUR LE BOUTON
+async function submitPostDirect() {
+    const title = document.getElementById('newTitle').value.trim();
+    const description = document.getElementById('newDescription').value.trim();
+    const category = document.getElementById('newCategory').value;
+    const file = mediaInput && mediaInput.files[0];
 
-        if (!title || !file) {
-            alert('Erreur : Veuillez ajouter un titre et choisir un fichier média.');
-            return;
-        }
+    if (!title || !file) {
+        alert('Veuillez ajouter un titre et choisir un fichier média.');
+        return;
+    }
 
-        const fileName = `${Date.now()}_${file.name}`;
-        const { data: uploadData, error: uploadError } = await supabase.storage.from('media').upload(fileName, file);
+    alert('Envoi en cours sur le serveur, veuillez patienter...');
 
-        if (uploadError) {
-            alert('Erreur Storage : ' + uploadError.message);
-            return;
-        }
+    const fileName = `${Date.now()}_${file.name}`;
+    const { data: uploadData, error: uploadError } = await supabase.storage.from('media').upload(fileName, file);
 
-        const { data: publicUrlData } = supabase.storage.from('media').getPublicUrl(fileName);
-        const media_url = publicUrlData.publicUrl;
-        const media_type = file.type.startsWith('video/') ? 'video' : 'image';
+    if (uploadError) {
+        alert('Erreur Storage : ' + uploadError.message);
+        return;
+    }
 
-        const { error: dbError } = await supabase.from('posts').insert([{
-            title,
-            description,
-            category,
-            media_url,
-            media_type
-        }]);
+    const { data: publicUrlData } = supabase.storage.from('media').getPublicUrl(fileName);
+    const media_url = publicUrlData.publicUrl;
+    const media_type = file.type.startsWith('video/') ? 'video' : 'image';
 
-        if (dbError) {
-            alert('Erreur Database : ' + dbError.message);
-            return;
-        }
+    const { error: dbError } = await supabase.from('posts').insert([{
+        title,
+        description,
+        category,
+        media_url,
+        media_type
+    }]);
 
-        alert('Publication ajoutée avec succès !');
-        document.getElementById('adminModal').classList.remove('open');
-        document.getElementById('newTitle').value = '';
-        document.getElementById('newDescription').value = '';
-        mediaInput.value = '';
-        if(mediaPreview) mediaPreview.innerHTML = '';
-        fetchPosts();
-    };
+    if (dbError) {
+        alert('Erreur Database : ' + dbError.message);
+        return;
+    }
+
+    alert('Publication ajoutée avec succès sur le site !');
+    document.getElementById('adminModal').classList.remove('open');
+    document.getElementById('newTitle').value = '';
+    document.getElementById('newDescription').value = '';
+    mediaInput.value = '';
+    if(mediaPreview) mediaPreview.innerHTML = '';
+    fetchPosts();
 }
 
 async function deletePost(id) {
@@ -237,5 +238,5 @@ async function deletePost(id) {
 }
 </script>
 </body>
- </html>
- 
+  </html>
+  
