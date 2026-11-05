@@ -34,7 +34,7 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
  <div class="top">
   <a class="brand" href="#"><span class="logo">∞</span><span>AU-DELÀ DE<br><span>L'IMAGINATION</span></span></a>
   <form class="search" id="searchForm"><input id="searchInput" type="search" placeholder="Rechercher une vidéo, une image..."><button>⌕</button></form>
-  <button class="admin" id="adminOpen">Espace admin</button>
+  <button class="admin" id="adminOpen" type="button">Espace admin</button>
  </div>
  <nav><a href="#accueil">Accueil</a><a href="#videos">Vidéos</a><a href="#images">Images</a><a href="#actualites">Actualités</a><a href="#apropos">À propos</a><a href="#contact">Contact</a></nav>
 </header>
@@ -69,7 +69,7 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
 </main>
 <footer>© <span id="year"></span> <strong>AU-DELÀ DE L'IMAGINATION</strong> — Tous droits réservés.</footer>
 
-<div class="modal" id="adminModal"><div class="box"><h2>🔐 Espace administrateur</h2><p>Connecte-toi pour publier une photo ou une vidéo sur le site en ligne.</p><input id="adminPassword" type="password" placeholder="Mot de passe admin"><button id="login">Se connecter</button><button class="close" id="closeModal">Fermer</button><div id="adminPanel" hidden>
+<div class="modal" id="adminModal"><div class="box"><h2>🔐 Espace administrateur</h2><p>Connecte-toi pour publier une photo ou une vidéo sur le site en ligne.</p><input id="adminPassword" type="password" placeholder="Mot de passe admin"><button id="login" type="button">Se connecter</button><button class="close" id="closeModal" type="button">Fermer</button><div id="adminPanel" hidden>
 <hr><h3>Ajouter une publication</h3>
 <input id="newTitle" placeholder="Titre de la publication">
 <textarea id="newDescription" placeholder="Écris une description..."></textarea>
@@ -77,9 +77,9 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
 <label for="newMedia" style="display:block;margin:12px 0 8px;font-weight:bold;color:#f5c451">📷 Choisir une photo ou une vidéo</label>
 <input id="newMedia" type="file" accept="image/*,video/*" style="width:100%;padding:10px;background:#071629;color:white;border:1px solid #ffffff25;border-radius:9px">
 <div id="mediaPreview" style="margin:10px 0"></div>
-<button id="addPost">Publier sur le serveur</button></div></div></div>
+<button id="addPost" type="button">Publier sur le serveur</button></div></div></div>
 
-<div class="modal" id="resultModal" aria-hidden="true"><div class="box detail-box"><button class="close" id="closeResult" style="float:right">Fermer ✕</button><div id="resultDetail"></div></div></div>
+<div class="modal" id="resultModal" aria-hidden="true"><div class="box detail-box"><button class="close" id="closeResult" style="float:right" type="button">Fermer ✕</button><div id="resultDetail"></div></div></div>
 
 <script>
 // CONFIGURATION SUPABASE INTÉGRÉE
@@ -87,24 +87,43 @@ const SUPABASE_URL = 'https://zeqawxbtttsltkdtzpzf.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_zzQxURC8KVfgmjojn-5TVQ_Afps4xcJ';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-document.getElementById('year').textContent=new Date().getFullYear();
-const modal=document.getElementById('adminModal');
-document.getElementById('adminOpen').onclick=()=>modal.classList.add('open');
-document.getElementById('closeModal').onclick=()=>modal.classList.remove('open');
+document.getElementById('year').textContent = new Date().getFullYear();
 
-let isAdminMode=false;
-document.getElementById('login').onclick=()=>{
-  if(document.getElementById('adminPassword').value==='Lefa8899'){
-    document.getElementById('adminPanel').hidden=false;
-    isAdminMode=true;
-    document.body.classList.add('admin-mode');
-    alert('Connecté avec succès ! Tu peux maintenant ajouter des publications.');
-  }else alert('Mot de passe incorrect.');
-};
+const modal = document.getElementById('adminModal');
+const adminOpenBtn = document.getElementById('adminOpen');
+const closeModalBtn = document.getElementById('closeModal');
+
+if(adminOpenBtn) {
+    adminOpenBtn.onclick = () => {
+        if(modal) modal.classList.add('open');
+    };
+}
+if(closeModalBtn) {
+    closeModalBtn.onclick = () => {
+        if(modal) modal.classList.remove('open');
+    };
+}
+
+let isAdminMode = false;
+const loginBtn = document.getElementById('login');
+if(loginBtn) {
+    loginBtn.onclick = () => {
+        const passInput = document.getElementById('adminPassword');
+        if(passInput && passInput.value === 'Lefa8899') {
+            document.getElementById('adminPanel').hidden = false;
+            isAdminMode = true;
+            document.body.classList.add('admin-mode');
+            alert('Connecté avec succès ! Tu peux maintenant ajouter des publications.');
+        } else {
+            alert('Mot de passe incorrect.');
+        }
+    };
+}
 
 async function fetchPosts() {
     const { data, error } = await supabase.from('posts').select('*').order('id', { ascending: false });
     const grid = document.getElementById('postGrid');
+    if(!grid) return;
     grid.innerHTML = '';
     
     if (error) {
@@ -137,8 +156,8 @@ async function fetchPosts() {
                 <h3>${post.title}</h3>
                 <p>${post.description || ''}</p>
                 <div class="actions">
-                    <button class="like">♡ J'aime <span>0</span></button>
-                    ${isAdminMode ? `<button class="delete-btn" onclick="deletePost(${post.id})">🗑️ Supprimer</button>` : ''}
+                    <button class="like" type="button">♡ J'aime <span>0</span></button>
+                    ${isAdminMode ? `<button class="delete-btn" type="button" onclick="deletePost(${post.id})">🗑️ Supprimer</button>` : ''}
                 </div>
             </div>
         `;
@@ -147,53 +166,56 @@ async function fetchPosts() {
 }
 fetchPosts();
 
-document.getElementById('addPost').onclick = async () => {
-    const title = document.getElementById('newTitle').value.trim();
-    const description = document.getElementById('newDescription').value.trim();
-    const category = document.getElementById('newCategory').value;
-    const fileInput = document.getElementById('newMedia');
-    const file = fileInput.files[0];
+const addPostBtn = document.getElementById('addPost');
+if(addPostBtn) {
+    addPostBtn.onclick = async () => {
+        const title = document.getElementById('newTitle').value.trim();
+        const description = document.getElementById('newDescription').value.trim();
+        const category = document.getElementById('newCategory').value;
+        const fileInput = document.getElementById('newMedia');
+        const file = fileInput.files[0];
 
-    if (!title || !file) {
-        alert('Veuillez ajouter un titre et choisir un fichier média.');
-        return;
-    }
+        if (!title || !file) {
+            alert('Veuillez ajouter un titre et choisir un fichier média.');
+            return;
+        }
 
-    alert('Envoi en cours, veuillez patienter...');
+        alert('Envoi en cours, veuillez patienter...');
 
-    const fileName = `${Date.now()}_${file.name}`;
-    const { data: uploadData, error: uploadError } = await supabase.storage.from('media').upload(fileName, file);
+        const fileName = `${Date.now()}_${file.name}`;
+        const { data: uploadData, error: uploadError } = await supabase.storage.from('media').upload(fileName, file);
 
-    if (uploadError) {
-        alert('Erreur lors de l\'upload du fichier : ' + uploadError.message);
-        return;
-    }
+        if (uploadError) {
+            alert('Erreur lors de l\'upload du fichier : ' + uploadError.message);
+            return;
+        }
 
-    const { data: publicUrlData } = supabase.storage.from('media').getPublicUrl(fileName);
-    const media_url = publicUrlData.publicUrl;
-    const media_type = file.type.startsWith('video/') ? 'video' : 'image';
+        const { data: publicUrlData } = supabase.storage.from('media').getPublicUrl(fileName);
+        const media_url = publicUrlData.publicUrl;
+        const media_type = file.type.startsWith('video/') ? 'video' : 'image';
 
-    const { error: dbError } = await supabase.from('posts').insert([{
-        title,
-        description,
-        category,
-        media_url,
-        media_type
-    }]);
+        const { error: dbError } = await supabase.from('posts').insert([{
+            title,
+            description,
+            category,
+            media_url,
+            media_type
+        }]);
 
-    if (dbError) {
-        alert('Erreur lors de l\'enregistrement : ' + dbError.message);
-        return;
-    }
+        if (dbError) {
+            alert('Erreur lors de l\'enregistrement : ' + dbError.message);
+            return;
+        }
 
-    alert('Publication ajoutée avec succès !');
-    modal.classList.remove('open');
-    document.getElementById('newTitle').value = '';
-    document.getElementById('newDescription').value = '';
-    fileInput.value = '';
-    document.getElementById('mediaPreview').innerHTML = '';
-    fetchPosts();
-};
+        alert('Publication ajoutée avec succès !');
+        if(modal) modal.classList.remove('open');
+        document.getElementById('newTitle').value = '';
+        document.getElementById('newDescription').value = '';
+        fileInput.value = '';
+        document.getElementById('mediaPreview').innerHTML = '';
+        fetchPosts();
+    };
+}
 
 async function deletePost(id) {
     if(confirm('Voulez-vous vraiment supprimer cette publication ?')) {
@@ -216,4 +238,5 @@ document.querySelectorAll('.category').forEach(c => c.onclick = () => {
 });
 </script>
 </body>
-</html>
+ </html>
+  
