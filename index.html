@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="AU-DELÀ DE L'IMAGINATION : vidéos, images, créations et inspirations extraordinaires.">
 <title>AU-DELÀ DE L'IMAGINATION</title>
+<!-- SDK Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#071225;--panel:#101f38;--panel2:#142844;--blue:#168bff;--gold:#f5c451;--text:#f4f7fc;--muted:#a9b8cc}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
@@ -27,33 +29,7 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
 @media(max-width:600px){.top{gap:10px}.brand{font-size:13px}.search{order:3;max-width:none;flex-basis:100%}.hero{margin:18px 12px;padding:38px 22px;min-height:300px}.wrap{padding:0 14px}.section-head h2{font-size:21px}}
 </style>
 </head>
-<body><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-const SUPABASE_URL = "sb_publishable_zzQxURC8KVfgmjojn-5TVQ_Afps4xcJ";
-const SUPABASE_KEY = "sb_secret_lp3Sb-zWftoEzzzttiTe_Q_4vMIDO-3";
-
-const db = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-// Tester la connexion
-async function testerConnexion() {
-  try {
-    const { data, error } = await db
-      .from("test")
-      .select("*")
-      .limit(1);
-
-    if (error) throw error;
-
-    console.log("Connexion réussie !");
-  } catch (error) {
-    console.error("Erreur :", error.message);
-  }
-}
-</script>
+<body>
 <header>
  <div class="top">
   <a class="brand" href="#"><span class="logo">∞</span><span>AU-DELÀ DE<br><span>L'IMAGINATION</span></span></a>
@@ -78,14 +54,11 @@ async function testerConnexion() {
   </div>
  </section>
  <section class="wrap" id="videos">
-  <div class="section-head"><div><h2>Dernières publications</h2><p>Les contenus à découvrir sur notre page.</p></div></div>
+  <div class="section-head"><div><h2>Publications en ligne</h2><p>Les contenus synchronisés depuis la base de données.</p></div></div>
   <div class="grid" id="postGrid">
-   <article class="card" data-category="Vidéos IA"><div class="thumb">🎥</div><div class="card-body"><span class="tag">Vidéos IA</span><h3>Un monde sans limites</h3><p>Imaginez, créez et découvrez des scènes extraordinaires.</p><div class="actions"><button class="like">♡ J'aime <span>0</span></button><button class="comment-toggle">💬 Commenter</button></div><div class="comments"><input placeholder="Votre nom"><input placeholder="Votre commentaire"><button class="send-comment">Envoyer</button><div class="comment-list"></div></div></div></article>
-   <article class="card" data-category="Humour"><div class="thumb">😄</div><div class="card-body"><span class="tag">Humour</span><h3>Un moment de sourire</h3><p>Un peu de bonne humeur pour illuminer votre journée.</p><div class="actions"><button class="like">♡ J'aime <span>0</span></button><button class="comment-toggle">💬 Commenter</button></div><div class="comments"><input placeholder="Votre nom"><input placeholder="Votre commentaire"><button class="send-comment">Envoyer</button><div class="comment-list"></div></div></div></article>
-   <article class="card" data-category="Créations artistiques"><div class="thumb">✨</div><div class="card-body"><span class="tag">Créations artistiques</span><h3>La créativité en action</h3><p>Des idées originales qui donnent vie à l'imagination.</p><div class="actions"><button class="like">♡ J'aime <span>0</span></button><button class="comment-toggle">💬 Commenter</button></div><div class="comments"><input placeholder="Votre nom"><input placeholder="Votre commentaire"><button class="send-comment">Envoyer</button><div class="comment-list"></div></div></div></article>
+    <!-- Les publications chargées depuis Supabase -->
   </div>
  </section>
- <section class="wrap" id="images"><div class="section-head"><div><h2>Galerie d'images</h2><p>Un aperçu de notre univers visuel.</p></div></div><div class="grid"><div class="card"><div class="thumb">🌌</div><div class="card-body"><span class="tag">Inspiration</span><h3>Rêvez plus grand</h3></div></div><div class="card"><div class="thumb">🏰</div><div class="card-body"><span class="tag">Fantaisie</span><h3>Explorez l'impossible</h3></div></div><div class="card"><div class="thumb">🚀</div><div class="card-body"><span class="tag">Innovation</span><h3>Vers de nouveaux horizons</h3></div></div></div></section>
  <section class="wrap" id="actualites"><div class="follow">
   <h2>❤️ Rejoignez notre univers</h2>
   <p>Découvrez nos nouvelles publications et partagez vos impressions dans les commentaires.</p>
@@ -96,256 +69,152 @@ async function testerConnexion() {
 </main>
 <footer>© <span id="year"></span> <strong>AU-DELÀ DE L'IMAGINATION</strong> — Tous droits réservés.</footer>
 
-<div class="modal" id="adminModal"><div class="box"><h2>🔐 Espace administrateur</h2><p>Connecte-toi, puis choisis un fichier dans ton téléphone pour publier une photo ou une vidéo.</p><input id="adminPassword" type="password" placeholder="Mot de passe de démonstration"><button id="login">Se connecter</button><button class="close" id="closeModal">Fermer</button><div id="adminPanel" hidden>
-<div class="admin-tools active" id="dashboardTools">
-<h3>⚙️ Tableau de bord</h3>
-<p class="notice">Depuis cet espace, tu peux modifier les textes du site et gérer les publications affichées dans cette page.</p>
-<label class="field-label" for="editHeroTitle">Titre de la page d'accueil</label>
-<input id="editHeroTitle" value="AU-DELÀ DE L'IMAGINATION">
-<label class="field-label" for="editHeroText">Description de l'accueil</label>
-<textarea id="editHeroText">Découvrez un univers extraordinaire de vidéos, d'images, d'histoires et d'inspirations. Ici, la créativité n'a pas de limites !</textarea>
-<label class="field-label" for="editFooterText">Texte du pied de page</label>
-<input id="editFooterText" value="AU-DELÀ DE L'IMAGINATION">
-<button id="saveSiteSettings">Enregistrer les textes</button>
-<button id="showManagePosts">Gérer les publications</button>
-<div id="managePostsList"></div>
-<p class="notice">L'année du copyright se met à jour automatiquement. Les modifications et médias de cette démonstration restent sur cet appareil / cette session selon le navigateur. Pour les partager avec tous les visiteurs, le site devra être hébergé avec une base de données et un stockage de fichiers.</p>
-</div>
+<div class="modal" id="adminModal"><div class="box"><h2>🔐 Espace administrateur</h2><p>Connecte-toi pour publier une photo ou une vidéo sur le site en ligne.</p><input id="adminPassword" type="password" placeholder="Mot de passe admin"><button id="login">Se connecter</button><button class="close" id="closeModal">Fermer</button><div id="adminPanel" hidden>
 <hr><h3>Ajouter une publication</h3>
 <input id="newTitle" placeholder="Titre de la publication">
 <textarea id="newDescription" placeholder="Écris une description..."></textarea>
 <select id="newCategory" style="width:100%;padding:12px;background:#071629;color:white;border-radius:9px"><option>Vidéos IA</option><option>Humour</option><option>Actualités</option><option>Créations artistiques</option><option>Histoires</option></select>
-<label for="newMedia" style="display:block;margin:12px 0 8px;font-weight:bold;color:#f5c451">📷 1. Choisir une photo ou une vidéo</label>
+<label for="newMedia" style="display:block;margin:12px 0 8px;font-weight:bold;color:#f5c451">📷 Choisir une photo ou une vidéo</label>
 <input id="newMedia" type="file" accept="image/*,video/*" style="width:100%;padding:10px;background:#071629;color:white;border:1px solid #ffffff25;border-radius:9px">
-<div id="mediaPreview" style="margin:10px 0"></div><p style="font-size:12px;color:#a9b8cc">2. Ajoute un titre et une description, puis appuie sur « Publier ».</p>
-<button id="addPost">Publier</button></div><p class="notice">Démo HTML : le mot de passe et les publications ne sont pas sécurisés ni enregistrés sur un serveur. Pour un vrai site public, il faudra connecter un hébergement avec base de données.</p></div></div>
+<div id="mediaPreview" style="margin:10px 0"></div>
+<button id="addPost">Publier sur le serveur</button></div></div></div>
+
 <div class="modal" id="resultModal" aria-hidden="true"><div class="box detail-box"><button class="close" id="closeResult" style="float:right">Fermer ✕</button><div id="resultDetail"></div></div></div>
+
 <script>
+// CONFIGURATION SUPABASE INTÉGRÉE AVEC VOS VRAIES CLÉS
+const SUPABASE_URL = 'https://zeqawxbtttsltkdtzpzf.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_zzQxURC8KVfgmjojn-5TVQ_Afps4xcJ';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 document.getElementById('year').textContent=new Date().getFullYear();
 const modal=document.getElementById('adminModal');
 document.getElementById('adminOpen').onclick=()=>modal.classList.add('open');
 document.getElementById('closeModal').onclick=()=>modal.classList.remove('open');
+
 let isAdminMode=false;
 document.getElementById('login').onclick=()=>{
   if(document.getElementById('adminPassword').value==='Lefa8899'){
     document.getElementById('adminPanel').hidden=false;
     isAdminMode=true;
     document.body.classList.add('admin-mode');
-    document.querySelectorAll('#postGrid .card, #images .card').forEach(addManageButtons);
-    renderManagePosts();
-    alert('Tableau de bord ouvert. Ceci reste une démonstration locale, pas encore un espace sécurisé en ligne.');
+    alert('Connecté avec succès ! Tu peux maintenant ajouter des publications.');
   }else alert('Mot de passe incorrect.');
 };
-document.querySelectorAll('.like').forEach(b=>b.onclick=()=>{let s=b.querySelector('span');let n=Number(s.textContent);s.textContent=n?0:1;b.firstChild.textContent=n?'♡ J’aime ':'♥ J’aime ';});
-document.querySelectorAll('.comment-toggle').forEach(b=>b.onclick=()=>b.closest('.card-body').querySelector('.comments').classList.toggle('show'));
-document.querySelectorAll('.send-comment').forEach(b=>b.onclick=()=>{let box=b.parentElement,inputs=box.querySelectorAll('input'),name=inputs[0].value.trim(),msg=inputs[1].value.trim();if(!name||!msg){alert('Entrez votre nom et votre commentaire.');return;}let line=document.createElement('p');line.textContent=name+' : '+msg;box.querySelector('.comment-list').appendChild(line);inputs.forEach(i=>i.value='');});
-document.querySelectorAll('.category').forEach(c=>c.onclick=()=>{document.querySelectorAll('.category').forEach(x=>x.classList.remove('active'));c.classList.add('active');searchInput.value='';document.querySelectorAll('#images .card').forEach(card=>card.style.display='');document.getElementById('searchMessage')?.remove();filterPosts(c.dataset.filter);});
-function filterPosts(f){document.querySelectorAll('#postGrid .card').forEach(card=>card.style.display=f==='tout'||card.dataset.category===f?'':'none');}
-const searchInput=document.getElementById('searchInput');
 
-// Recherche classique : sans IA, sans API et sans frais.
-function normalizeSearchText(value){
-  return (value || '').toString().toLocaleLowerCase('fr')
-    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-    .replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
-}
-function getSearchCards(){
-  return [...document.querySelectorAll('#postGrid .card, #images .card')];
-}
-function runSiteSearch(shouldScroll=false){
-  const query=normalizeSearchText(searchInput.value);
-  const words=query.split(' ').filter(Boolean);
-  const cards=getSearchCards();
-  let found=0;
-
-  cards.forEach(card=>{
-    const searchable=normalizeSearchText(card.textContent);
-    const match=words.length===0 || words.every(word=>searchable.includes(word));
-    card.style.display=match ? '' : 'none';
-    card.classList.toggle('search-result-card', !!query && match);
-    card.setAttribute('tabindex', query && match ? '0' : '-1');
-    if(match && words.length) found++;
-  });
-
-  let message=document.getElementById('searchMessage');
-  if(!message){
-    message=document.createElement('p');
-    message.id='searchMessage';
-    message.setAttribute('role','status');
-    message.style.cssText='color:#f5c451;margin:12px 0;font-weight:bold';
-    document.getElementById('videos').insertBefore(message,document.getElementById('postGrid'));
-  }
-  message.textContent=words.length
-    ? (found ? found+' résultat(s) trouvé(s). Appuie sur une publication pour l’ouvrir.' : 'Aucun résultat. Essaie un autre mot-clé.')
-    : 'Entre un mot dans la barre de recherche.';
-
-  if(shouldScroll){
-    const target=message;
-    target.scrollIntoView({behavior:'smooth',block:'center'});
-  }
-}
-document.getElementById('searchForm').addEventListener('submit',e=>{
-  e.preventDefault();
-  runSiteSearch(true);
-});
-searchInput.addEventListener('input',()=>runSiteSearch(false));
-
-// Ouvrir le contenu sélectionné dans une fenêtre détaillée.
-const resultModal=document.getElementById('resultModal');
-const resultDetail=document.getElementById('resultDetail');
-function openSearchResult(card){
-  resultDetail.innerHTML='';
-  const media=card.querySelector('.thumb img, .thumb video');
-  if(media){
-    const copy=media.cloneNode(true);
-    copy.className='detail-media';
-    if(copy.tagName==='VIDEO'){copy.controls=true;copy.autoplay=false;}
-    resultDetail.appendChild(copy);
-  } else {
-    const thumb=card.querySelector('.thumb');
-    if(thumb){
-      const visual=document.createElement('div');
-      visual.className='thumb';
-      visual.style.cssText='height:180px;border-radius:12px;margin:12px 0';
-      visual.textContent=thumb.textContent;
-      resultDetail.appendChild(visual);
+async function fetchPosts() {
+    const { data, error } = await supabase.from('posts').select('*').order('id', { ascending: false });
+    const grid = document.getElementById('postGrid');
+    grid.innerHTML = '';
+    
+    if (error) {
+        console.error('Erreur de chargement:', error);
+        grid.innerHTML = '<p style="color:var(--gold);">Erreur de chargement de la base de données.</p>';
+        return;
     }
-  }
-  const tag=card.querySelector('.tag');
-  const title=card.querySelector('h3');
-  const description=card.querySelector('p');
-  if(tag){const t=document.createElement('span');t.className='tag';t.textContent=tag.textContent;resultDetail.appendChild(t);}
-  if(title){const h=document.createElement('h2');h.textContent=title.textContent;resultDetail.appendChild(h);}
-  if(description){const p=document.createElement('p');p.textContent=description.textContent;p.style.color='var(--muted)';resultDetail.appendChild(p);}
-  resultModal.classList.add('open');
-  resultModal.setAttribute('aria-hidden','false');
-}
-document.addEventListener('click',e=>{
-  const card=e.target.closest('.search-result-card');
-  if(card && !e.target.closest('button,input,textarea')) openSearchResult(card);
-});
-document.addEventListener('keydown',e=>{
-  if(e.key==='Enter' && e.target.classList.contains('search-result-card')) openSearchResult(e.target);
-});
-document.getElementById('closeResult').onclick=()=>{
-  resultModal.classList.remove('open');
-  resultModal.setAttribute('aria-hidden','true');
-};
-resultModal.addEventListener('click',e=>{
-  if(e.target===resultModal) resultModal.classList.remove('open');
-});
 
-// Outils d'administration de démonstration
-function addManageButtons(card){
-  if(card.querySelector('.manage-actions')) return;
-  const body=card.querySelector('.card-body') || card;
-  const bar=document.createElement('div');
-  bar.className='manage-actions';
-  const edit=document.createElement('button');edit.textContent='✏️ Modifier';
-  const del=document.createElement('button');del.textContent='🗑️ Supprimer';
-  edit.onclick=()=>{
-    const title=card.querySelector('h3');
-    const desc=card.querySelector('.card-body p');
-    const tag=card.querySelector('.tag');
-    const newTitle=prompt('Nouveau titre :',title?.textContent || '');
-    if(newTitle===null) return;
-    const newDesc=prompt('Nouvelle description :',desc?.textContent || '');
-    if(newDesc===null) return;
-    const newCat=prompt('Nouvelle catégorie :',tag?.textContent || card.dataset.category || 'Autre');
-    if(newCat===null) return;
-    if(title) title.textContent=newTitle.trim();
-    if(desc) desc.textContent=newDesc.trim();
-    if(tag) tag.textContent=newCat.trim();
-    card.dataset.category=newCat.trim();
-    renderManagePosts();
-  };
-  del.onclick=()=>{
-    if(confirm('Supprimer cette publication de cette page ?')){
-      card.remove();
-      renderManagePosts();
-      runSiteSearch(false);
+    if (!data || data.length === 0) {
+        grid.innerHTML = '<p>Aucune publication pour le moment.</p>';
+        return;
     }
-  };
-  bar.append(edit,del);body.appendChild(bar);
+
+    data.forEach(post => {
+        const article = document.createElement('article');
+        article.className = 'card search-result-card';
+        article.dataset.category = post.category;
+        
+        let mediaHtml = '';
+        if (post.media_type === 'video') {
+            mediaHtml = `<div class="thumb" style="height:auto;padding:0;"><video src="${post.media_url}" controls style="width:100%;max-height:220px;object-fit:contain;background:#061020"></video></div>`;
+        } else {
+            mediaHtml = `<div class="thumb" style="height:auto;padding:0;"><img src="${post.media_url}" style="width:100%;max-height:220px;object-fit:contain;background:#061020"></div>`;
+        }
+
+        article.innerHTML = `
+            ${mediaHtml}
+            <div class="card-body">
+                <span class="tag">${post.category}</span>
+                <h3>${post.title}</h3>
+                <p>${post.description || ''}</p>
+                <div class="actions">
+                    <button class="like">♡ J'aime <span>0</span></button>
+                    ${isAdminMode ? `<button class="delete-btn" onclick="deletePost(${post.id})">🗑️ Supprimer</button>` : ''}
+                </div>
+            </div>
+        `;
+        grid.appendChild(article);
+    });
 }
-function renderManagePosts(){
-  const list=document.getElementById('managePostsList');
-  if(!list) return;
-  list.innerHTML='<h3 style="margin-top:18px">Publications existantes</h3>';
-  const cards=[...document.querySelectorAll('#postGrid .card, #images .card')];
-  if(!cards.length){list.innerHTML+='<p>Aucune publication.</p>';return;}
-  cards.forEach((card,index)=>{
-    addManageButtons(card);
-    const row=document.createElement('div');
-    row.style.cssText='padding:9px 0;border-bottom:1px solid #ffffff20;font-size:14px';
-    const title=card.querySelector('h3')?.textContent || 'Publication sans titre';
-    row.textContent=(index+1)+'. '+title;
-    list.appendChild(row);
-  });
-}
-document.getElementById('saveSiteSettings').onclick=()=>{
-  const title=document.getElementById('editHeroTitle').value.trim();
-  const desc=document.getElementById('editHeroText').value.trim();
-  const footer=document.getElementById('editFooterText').value.trim();
-  if(title) document.querySelector('.hero h1').textContent=title;
-  document.querySelector('.hero p').textContent=desc;
-  const footerStrong=document.querySelector('footer strong');
-  if(footerStrong) footerStrong.textContent=footer;
-  alert('Textes modifiés sur cette page. Pour conserver les changements et les publier pour tous, il faudra le serveur du site.');
-};
-document.getElementById('showManagePosts').onclick=()=>{
-  renderManagePosts();
-  document.getElementById('managePostsList').scrollIntoView({behavior:'smooth',block:'nearest'});
+fetchPosts();
+
+document.getElementById('addPost').onclick = async () => {
+    const title = document.getElementById('newTitle').value.trim();
+    const description = document.getElementById('newDescription').value.trim();
+    const category = document.getElementById('newCategory').value;
+    const fileInput = document.getElementById('newMedia');
+    const file = fileInput.files[0];
+
+    if (!title || !file) {
+        alert('Veuillez ajouter un titre et choisir un fichier média.');
+        return;
+    }
+
+    alert('Envoi en cours, veuillez patienter...');
+
+    const fileName = `${Date.now()}_${file.name}`;
+    const { data: uploadData, error: uploadError } = await supabase.storage.from('media').upload(fileName, file);
+
+    if (uploadError) {
+        alert('Erreur lors de l\'upload du fichier : ' + uploadError.message);
+        return;
+    }
+
+    const { data: publicUrlData } = supabase.storage.from('media').getPublicUrl(fileName);
+    const media_url = publicUrlData.publicUrl;
+    const media_type = file.type.startsWith('video/') ? 'video' : 'image';
+
+    const { error: dbError } = await supabase.from('posts').insert([{
+        title,
+        description,
+        category,
+        media_url,
+        media_type
+    }]);
+
+    if (dbError) {
+        alert('Erreur lors de l\'enregistrement : ' + dbError.message);
+        return;
+    }
+
+    alert('Publication ajoutée avec succès !');
+    modal.classList.remove('open');
+    document.getElementById('newTitle').value = '';
+    document.getElementById('newDescription').value = '';
+    fileInput.value = '';
+    document.getElementById('mediaPreview').innerHTML = '';
+    fetchPosts();
 };
 
-const mediaInput=document.getElementById('newMedia');
-const mediaPreview=document.getElementById('mediaPreview');
-let selectedMediaUrl='';
-mediaInput.addEventListener('change',()=>{
-  if(selectedMediaUrl) URL.revokeObjectURL(selectedMediaUrl);
-  mediaPreview.innerHTML='';
-  const file=mediaInput.files && mediaInput.files[0];
-  if(!file) return;
-  if(!file.type.startsWith('image/') && !file.type.startsWith('video/')){
-    alert('Choisissez une image ou une vidéo.');
-    mediaInput.value='';
-    return;
-  }
-  selectedMediaUrl=URL.createObjectURL(file);
-  const preview=file.type.startsWith('video/')?document.createElement('video'):document.createElement('img');
-  preview.src=selectedMediaUrl;
-  preview.style.cssText='width:100%;max-height:220px;object-fit:contain;border-radius:10px;background:#061020';
-  if(preview.tagName==='VIDEO'){preview.controls=true;preview.playsInline=true;}
-  mediaPreview.appendChild(preview);
+async function deletePost(id) {
+    if(confirm('Voulez-vous vraiment supprimer cette publication ?')) {
+        const { error } = await supabase.from('posts').delete().eq('id', id);
+        if(error) {
+            alert('Erreur lors de la suppression');
+        } else {
+            fetchPosts();
+        }
+    }
+}
+
+document.querySelectorAll('.category').forEach(c => c.onclick = () => {
+    document.querySelectorAll('.category').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    const filter = c.dataset.filter;
+    document.querySelectorAll('#postGrid .card').forEach(card => {
+        card.style.display = filter === 'tout' || card.dataset.category === filter ? '' : 'none';
+    });
 });
-document.getElementById('addPost').onclick=()=>{
-  const title=document.getElementById('newTitle').value.trim();
-  const desc=document.getElementById('newDescription').value.trim();
-  const cat=document.getElementById('newCategory').value;
-  const file=mediaInput.files && mediaInput.files[0];
-  if(!title){alert('Ajoutez un titre.');return;}
-  if(!file){alert('Choisissez une photo ou une vidéo.');return;}
-  const card=document.createElement('article');
-  card.className='card';card.dataset.category=cat;
-  const thumb=document.createElement('div');thumb.className='thumb';thumb.style.height='auto';thumb.style.padding='0';
-  const media=file.type.startsWith('video/')?document.createElement('video'):document.createElement('img');
-  media.src=URL.createObjectURL(file);media.style.cssText='display:block;width:100%;max-height:320px;object-fit:contain;background:#061020';
-  if(media.tagName==='VIDEO'){media.controls=true;media.playsInline=true;}
-  thumb.appendChild(media);
-  const body=document.createElement('div');body.className='card-body';
-  const tag=document.createElement('span');tag.className='tag';tag.textContent=cat;
-  const heading=document.createElement('h3');heading.textContent=title;
-  const paragraph=document.createElement('p');paragraph.textContent=desc;
-  const actions=document.createElement('div');actions.className='actions';
-  const like=document.createElement('button');like.innerHTML='♡ J’aime <span>0</span>';
-  like.onclick=()=>{const count=like.querySelector('span');count.textContent=Number(count.textContent)?0:1;};
-  actions.appendChild(like);body.append(tag,heading,paragraph,actions);card.append(thumb,body);
-  document.getElementById('postGrid').prepend(card);if(isAdminMode)addManageButtons(card);renderManagePosts();
-  document.getElementById('newTitle').value='';document.getElementById('newDescription').value='';
-  mediaInput.value='';mediaPreview.innerHTML='';selectedMediaUrl='';
-  modal.classList.remove('open');
-  alert('Publication affichée sur cette page. Elle ne sera pas encore visible chez les autres visiteurs : il faut connecter le site à un serveur pour envoyer et enregistrer les fichiers en ligne.');
-};
 </script>
 </body>
-</html>
+  </html>
+  
