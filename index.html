@@ -70,29 +70,41 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
 </main>
 <footer>© <span id="year"></span> <strong>AU-DELÀ DE L'IMAGINATION</strong> — Tous droits réservés.</footer>
 
-<div class="modal" id="adminModal"><div class="box"><h2>🔐 Espace administrateur</h2><p>Connecte-toi, puis choisis un fichier dans ton téléphone pour publier une photo ou une vidéo sur le serveur.</p><input id="adminPassword" type="password" placeholder="Mot de passe admin"><button id="login" type="button" onclick="checkAdminLogin()">Se connecter</button><button class="close" id="closeModal" type="button" onclick="document.getElementById('adminModal').classList.remove('open')">Fermer</button><div id="adminPanel" style="display:none; margin-top:15px;">
-<div class="admin-tools active" id="dashboardTools">
-<h3>⚙️ Tableau de bord</h3>
-<p class="notice">Depuis cet espace, tu peux modifier les textes du site et gérer les publications affichées.</p>
-<label class="field-label" for="editHeroTitle">Titre de la page d'accueil</label>
-<input id="editHeroTitle" value="AU-DELÀ DE L'IMAGINATION">
-<label class="field-label" for="editHeroText">Description de l'accueil</label>
-<textarea id="editHeroText">Découvrez un univers extraordinaire de vidéos, d'images, d'histoires et d'inspirations. Ici, la créativité n'a pas de limites !</textarea>
-<label class="field-label" for="editFooterText">Texte du pied de page</label>
-<input id="editFooterText" value="AU-DELÀ DE L'IMAGINATION">
-<button id="saveSiteSettings" type="button">Enregistrer les textes</button>
-<button id="showManagePosts" type="button">Gérer les publications</button>
-<div id="managePostsList"></div>
+<div class="modal" id="adminModal">
+  <div class="box">
+    <h2>🔐 Espace administrateur</h2>
+    <p>Connecte-toi, puis choisis un fichier dans ton téléphone pour publier une photo ou une vidéo sur le serveur.</p>
+    <input id="adminPassword" type="password" placeholder="Mot de passe admin">
+    <button id="login" type="button" onclick="if(document.getElementById('adminPassword').value === 'Lefa8899'){ document.getElementById('adminPanel').style.display = 'block'; isAdminMode = true; document.body.classList.add('admin-mode'); renderManagePosts(); alert('Connecté avec succès !'); } else { alert('Mot de passe incorrect.'); }">Se connecter</button>
+    <button class="close" id="closeModal" type="button" onclick="document.getElementById('adminModal').classList.remove('open')">Fermer</button>
+    
+    <div id="adminPanel" style="display:none; margin-top:15px;">
+      <div class="admin-tools active" id="dashboardTools">
+        <h3>⚙️ Tableau de bord</h3>
+        <p class="notice">Depuis cet espace, tu peux modifier les textes du site et gérer les publications affichées.</p>
+        <label class="field-label" for="editHeroTitle">Titre de la page d'accueil</label>
+        <input id="editHeroTitle" value="AU-DELÀ DE L'IMAGINATION">
+        <label class="field-label" for="editHeroText">Description de l'accueil</label>
+        <textarea id="editHeroText">Découvrez un univers extraordinaire de vidéos, d'images, d'histoires et d'inspirations. Ici, la créativité n'a pas de limites !</textarea>
+        <label class="field-label" for="editFooterText">Texte du pied de page</label>
+        <input id="editFooterText" value="AU-DELÀ DE L'IMAGINATION">
+        <button id="saveSiteSettings" type="button">Enregistrer les textes</button>
+        <button id="showManagePosts" type="button">Gérer les publications</button>
+        <div id="managePostsList"></div>
+      </div>
+      <hr>
+      <h3>Ajouter une publication sur Supabase</h3>
+      <input id="newTitle" placeholder="Titre de la publication">
+      <textarea id="newDescription" placeholder="Écris une description..."></textarea>
+      <select id="newCategory" style="width:100%;padding:12px;background:#071629;color:white;border-radius:9px"><option>Vidéos IA</option><option>Humour</option><option>Actualités</option><option>Créations artistiques</option><option>Histoires</option></select>
+      <label for="newMedia" style="display:block;margin:12px 0 8px;font-weight:bold;color:#f5c451">📷 1. Choisir une photo ou une vidéo</label>
+      <input id="newMedia" type="file" accept="image/*,video/*" style="width:100%;padding:10px;background:#071629;color:white;border:1px solid #ffffff25;border-radius:9px">
+      <div id="mediaPreview" style="margin:10px 0"></div>
+      <p style="font-size:12px;color:#a9b8cc">2. Ajoute un titre et une description, puis appuie sur « Publier sur le serveur ».</p>
+      <button id="addPost" type="button">Publier sur le serveur</button>
+    </div>
+  </div>
 </div>
-<hr><h3>Ajouter une publication sur Supabase</h3>
-<input id="newTitle" placeholder="Titre de la publication">
-<textarea id="newDescription" placeholder="Écris une description..."></textarea>
-<select id="newCategory" style="width:100%;padding:12px;background:#071629;color:white;border-radius:9px"><option>Vidéos IA</option><option>Humour</option><option>Actualités</option><option>Créations artistiques</option><option>Histoires</option></select>
-<label for="newMedia" style="display:block;margin:12px 0 8px;font-weight:bold;color:#f5c451">📷 1. Choisir une photo ou une vidéo</label>
-<input id="newMedia" type="file" accept="image/*,video/*" style="width:100%;padding:10px;background:#071629;color:white;border:1px solid #ffffff25;border-radius:9px">
-<div id="mediaPreview" style="margin:10px 0"></div>
-<p style="font-size:12px;color:#a9b8cc">2. Ajoute un titre et une description, puis appuie sur « Publier sur le serveur ».</p>
-<button id="addPost" type="button">Publier sur le serveur</button></div></div></div>
 
 <div class="modal" id="resultModal" aria-hidden="true"><div class="box detail-box"><button class="close" id="closeResult" style="float:right" type="button">Fermer ✕</button><div id="resultDetail"></div></div></div>
 
@@ -105,20 +117,6 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 document.getElementById('year').textContent = new Date().getFullYear();
 
 let isAdminMode = false;
-
-function checkAdminLogin() {
-    const passInput = document.getElementById('adminPassword');
-    if(passInput && passInput.value === 'Lefa8899') {
-        document.getElementById('adminPanel').style.display = 'block';
-        isAdminMode = true;
-        document.body.classList.add('admin-mode');
-        document.querySelectorAll('#postGrid .card, #images .card').forEach(addManageButtons);
-        renderManagePosts();
-        alert('Connecté avec succès ! Tableau de bord ouvert.');
-    } else {
-        alert('Mot de passe incorrect.');
-    }
-}
 
 // Charger les publications depuis Supabase
 async function fetchPosts() {
@@ -260,4 +258,5 @@ function openSearchResult(card){
   if(resultModal) resultModal.classList.add('open');
 }
 document.addEventListener('click', e => {
-  const card = e.target.close
+  const card = e.target.closest('.search-result-card');
+  if(card && !e.target.closest('button, i
