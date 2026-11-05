@@ -25,7 +25,7 @@ nav{max-width:1180px;margin:auto;padding:0 20px 13px;display:flex;gap:22px;overf
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}.card{background:var(--panel);border:1px solid #ffffff12;border-radius:18px;overflow:hidden}.search-result-card{cursor:pointer;transition:transform .18s,border-color .18s}.search-result-card:hover{transform:translateY(-3px);border-color:var(--gold)}.detail-media{width:100%;max-height:55vh;object-fit:contain;background:#061020;border-radius:12px}.detail-box{width:min(700px,100%)}.thumb{height:155px;display:grid;place-items:center;background:linear-gradient(135deg,#17477b,#111d38 60%,#74511b);font-size:54px}.card-body{padding:16px}.tag{font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1px}.card h3{margin:8px 0;font-size:18px}.card p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}.actions{display:flex;gap:10px;align-items:center;margin-top:15px;flex-wrap:wrap}.actions button{border:1px solid #ffffff25;background:#172b49;color:white;border-radius:20px;padding:8px 12px;cursor:pointer}.actions button:hover{border-color:var(--gold)}.comments{margin-top:12px;display:none}.comments.show{display:block}.comments input{width:100%;padding:10px;border:1px solid #ffffff20;background:#08172b;color:white;border-radius:9px;margin-bottom:7px}.comments button{background:var(--blue);border:0;color:white;border-radius:9px;padding:8px 12px;cursor:pointer}.comment-list{font-size:13px;color:#cbd7e7;margin-top:8px}
 .follow{padding:30px;border-radius:20px;background:linear-gradient(110deg,#123a68,#14233d);border:1px solid #ffffff18;text-align:center}.follow h2{margin-top:0}.follow p{color:var(--muted)}
 footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-align:center;color:var(--muted);font-size:13px}footer strong{color:var(--gold)}
-.modal{display:none;position:fixed;inset:0;background:#000b;z-index:30;place-items:center;padding:18px}.modal.open{display:grid}.box{width:min(440px,100%);max-height:90vh;overflow-y:auto;background:#10213a;border:1px solid #ffffff25;border-radius:18px;padding:23px}.box h2{margin-top:0}.box input,.box textarea{width:100%;padding:12px;margin:7px 0;background:#071629;border:1px solid #ffffff25;border-radius:9px;color:white}.box textarea{min-height:90px}.box button{padding:11px 15px;border:0;border-radius:9px;background:var(--gold);font-weight:bold;cursor:pointer;margin:5px 5px 0 0}.box .close{background:#263b58;color:white}.notice{font-size:12px;color:#ffda8a;line-height:1.5}.admin-tools{display:none;margin:18px 0;padding:16px;border:1px solid #f5c45166;border-radius:14px;background:#0b1a30}.admin-tools.active{display:block}.admin-tools h3{margin:0 0 12px;color:var(--gold)}.admin-tools button,.manage-actions button{background:#263b58;color:white;border:1px solid #ffffff25;border-radius:9px;padding:8px 11px;margin:4px;cursor:pointer}.manage-actions{display:none;margin-top:10px}.admin-mode .manage-actions{display:block}.field-label{display:block;margin-top:10px;color:#f5c451;font-size:13px;font-weight:bold}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:30;place-items:center;padding:18px}.modal.open{display:grid}.box{width:min(440px,100%);max-height:90vh;overflow-y:auto;background:#10213a;border:1px solid #ffffff25;border-radius:18px;padding:23px}.box h2{margin-top:0}.box input,.box textarea{width:100%;padding:12px;margin:7px 0;background:#071629;border:1px solid #ffffff25;border-radius:9px;color:white}.box textarea{min-height:90px}.box button{padding:11px 15px;border:0;border-radius:9px;background:var(--gold);font-weight:bold;cursor:pointer;margin:5px 5px 0 0}.box .close{background:#263b58;color:white}.notice{font-size:12px;color:#ffda8a;line-height:1.5}.admin-tools{display:none;margin:18px 0;padding:16px;border:1px solid #f5c45166;border-radius:14px;background:#0b1a30}.admin-tools.active{display:block}.admin-tools button,.manage-actions button{background:#263b58;color:white;border:1px solid #ffffff25;border-radius:9px;padding:8px 11px;margin:4px;cursor:pointer}.manage-actions{display:none;margin-top:10px}.admin-mode .manage-actions{display:block}.field-label{display:block;margin-top:10px;color:#f5c451;font-size:13px;font-weight:bold}
 @media(max-width:600px){.top{gap:10px}.brand{font-size:13px}.search{order:3;max-width:none;flex-basis:100%}.hero{margin:18px 12px;padding:38px 22px;min-height:300px}.wrap{padding:0 14px}.section-head h2{font-size:21px}}
 </style>
 </head>
@@ -70,7 +70,7 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
 </main>
 <footer>© <span id="year"></span> <strong>AU-DELÀ DE L'IMAGINATION</strong> — Tous droits réservés.</footer>
 
-<div class="modal" id="adminModal"><div class="box"><h2>🔐 Espace administrateur</h2><p>Connecte-toi, puis choisis un fichier dans ton téléphone pour publier une photo ou une vidéo sur le serveur.</p><input id="adminPassword" type="password" placeholder="Mot de passe admin"><button id="login" type="button" onclick="checkAdminLogin()">Se connecter</button><button class="close" id="closeModal" type="button" onclick="document.getElementById('adminModal').classList.remove('open')">Fermer</button><div id="adminPanel" hidden>
+<div class="modal" id="adminModal"><div class="box"><h2>🔐 Espace administrateur</h2><p>Connecte-toi, puis choisis un fichier dans ton téléphone pour publier une photo ou une vidéo sur le serveur.</p><input id="adminPassword" type="password" placeholder="Mot de passe admin"><button id="login" type="button" onclick="checkAdminLogin()">Se connecter</button><button class="close" id="closeModal" type="button" onclick="document.getElementById('adminModal').classList.remove('open')">Fermer</button><div id="adminPanel" style="display:none; margin-top:15px;">
 <div class="admin-tools active" id="dashboardTools">
 <h3>⚙️ Tableau de bord</h3>
 <p class="notice">Depuis cet espace, tu peux modifier les textes du site et gérer les publications affichées.</p>
@@ -109,7 +109,7 @@ let isAdminMode = false;
 function checkAdminLogin() {
     const passInput = document.getElementById('adminPassword');
     if(passInput && passInput.value === 'Lefa8899') {
-        document.getElementById('adminPanel').hidden = false;
+        document.getElementById('adminPanel').style.display = 'block';
         isAdminMode = true;
         document.body.classList.add('admin-mode');
         document.querySelectorAll('#postGrid .card, #images .card').forEach(addManageButtons);
@@ -118,11 +118,6 @@ function checkAdminLogin() {
     } else {
         alert('Mot de passe incorrect.');
     }
-}
-
-const loginBtn = document.getElementById('login');
-if(loginBtn) {
-    loginBtn.onclick = checkAdminLogin;
 }
 
 // Charger les publications depuis Supabase
@@ -262,4 +257,7 @@ function openSearchResult(card){
   if(tag){ const t = document.createElement('span'); t.className = 'tag'; t.textContent = tag.textContent; resultDetail.appendChild(t); }
   if(title){ const h = document.createElement('h2'); h.textContent = title.textContent; resultDetail.appendChild(h); }
   if(description){ const p = document.createElement('p'); p.textContent = description.textContent; p.style.color = 'var(--muted)'; resultDetail.appendChild(p); }
-  if(res
+  if(resultModal) resultModal.classList.add('open');
+}
+document.addEventListener('click', e => {
+  const card = e.target.close
