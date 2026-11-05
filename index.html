@@ -25,7 +25,7 @@ nav{max-width:1180px;margin:auto;padding:0 20px 13px;display:flex;gap:22px;overf
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}.card{background:var(--panel);border:1px solid #ffffff12;border-radius:18px;overflow:hidden}.search-result-card{cursor:pointer;transition:transform .18s,border-color .18s}.search-result-card:hover{transform:translateY(-3px);border-color:var(--gold)}.detail-media{width:100%;max-height:55vh;object-fit:contain;background:#061020;border-radius:12px}.detail-box{width:min(700px,100%)}.thumb{height:155px;display:grid;place-items:center;background:linear-gradient(135deg,#17477b,#111d38 60%,#74511b);font-size:54px}.card-body{padding:16px}.tag{font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1px}.card h3{margin:8px 0;font-size:18px}.card p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}.actions{display:flex;gap:10px;align-items:center;margin-top:15px;flex-wrap:wrap}.actions button{border:1px solid #ffffff25;background:#172b49;color:white;border-radius:20px;padding:8px 12px;cursor:pointer}.actions button:hover{border-color:var(--gold)}.comments{margin-top:12px;display:none}.comments.show{display:block}.comments input{width:100%;padding:10px;border:1px solid #ffffff20;background:#08172b;color:white;border-radius:9px;margin-bottom:7px}.comments button{background:var(--blue);border:0;color:white;border-radius:9px;padding:8px 12px;cursor:pointer}.comment-list{font-size:13px;color:#cbd7e7;margin-top:8px}
 .follow{padding:30px;border-radius:20px;background:linear-gradient(110deg,#123a68,#14233d);border:1px solid #ffffff18;text-align:center}.follow h2{margin-top:0}.follow p{color:var(--muted)}
 footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-align:center;color:var(--muted);font-size:13px}footer strong{color:var(--gold)}
-.modal{display:none;position:fixed;inset:0;background:#000b;z-index:30;place-items:center;padding:18px}.modal.open{display:grid}.box{width:min(440px,100%);max-height:90vh;overflow-y:auto;background:#10213a;border:1px solid #ffffff25;border-radius:18px;padding:23px}.box h2{margin-top:0}.box input,.box textarea{width:100%;padding:12px;margin:7px 0;background:#071629;border:1px solid #ffffff25;border-radius:9px;color:white}.box textarea{min-height:90px}.box button{padding:11px 15px;border:0;border-radius:9px;background:var(--gold);font-weight:bold;cursor:pointer;margin:5px 5px 0 0}.box .close{background:#263b58;color:white}.notice{font-size:12px;color:#ffda8a;line-height:1.5}.admin-tools{display:none;margin:18px 0;padding:16px;border:1px solid #f5c45166;border-radius:14px;background:#0b1a30}.admin-tools.active{display:block}.admin-tools button,.manage-actions button{background:#263b58;color:white;border:1px solid #ffffff25;border-radius:9px;padding:8px 11px;margin:4px;cursor:pointer}.manage-actions{display:none;margin-top:10px}.admin-mode .manage-actions{display:block}.field-label{display:block;margin-top:10px;color:#f5c451;font-size:13px;font-weight:bold}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:30;place-items:center;padding:18px}.modal.open{display:grid}.box{width:min(440px,100%);max-height:90vh;overflow-y:auto;background:#10213a;border:1px solid #ffffff25;border-radius:18px;padding:23px}.box h2{margin-top:0}.box input,.box textarea{width:100%;padding:12px;margin:7px 0;background:#071629;border:1px solid #ffffff25;border-radius:9px;color:white}.box textarea{min-height:90px}.box button{padding:11px 15px;border:0;border-radius:9px;background:var(--gold);font-weight:bold;cursor:pointer;margin:5px 5px 0 0}.box .close{background:#263b58;color:white}.admin-tools{margin:18px 0;padding:16px;border:1px solid #f5c45166;border-radius:14px;background:#0b1a30}.admin-tools h3{margin:0 0 12px;color:var(--gold)}.admin-tools button,.manage-actions button{background:#263b58;color:white;border:1px solid #ffffff25;border-radius:9px;padding:8px 11px;margin:4px;cursor:pointer}.manage-actions{display:block;margin-top:10px}.field-label{display:block;margin-top:10px;color:#f5c451;font-size:13px;font-weight:bold}
 @media(max-width:600px){.top{gap:10px}.brand{font-size:13px}.search{order:3;max-width:none;flex-basis:100%}.hero{margin:18px 12px;padding:38px 22px;min-height:300px}.wrap{padding:0 14px}.section-head h2{font-size:21px}}
 </style>
 </head>
@@ -34,7 +34,7 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
  <div class="top">
   <a class="brand" href="#"><span class="logo">∞</span><span>AU-DELÀ DE<br><span>L'IMAGINATION</span></span></a>
   <form class="search" id="searchForm"><input id="searchInput" type="search" placeholder="Rechercher une vidéo, une image..."><button type="submit">⌕</button></form>
-  <button class="admin" id="adminOpen" type="button" onclick="document.getElementById('adminModal').classList.add('open')">Espace admin</button>
+  <button class="admin" id="adminOpen" type="button" onclick="let p=prompt('Mot de passe administrateur :'); if(p==='Lefa8899'){ document.getElementById('adminModal').classList.add('open'); } else if(p!==null){ alert('Mot de passe incorrect !'); }">Espace admin</button>
  </div>
  <nav><a href="#accueil">Accueil</a><a href="#videos">Vidéos</a><a href="#images">Images</a><a href="#actualites">Actualités</a><a href="#apropos">À propos</a><a href="#contact">Contact</a></nav>
 </header>
@@ -55,9 +55,7 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
  </section>
  <section class="wrap" id="videos">
   <div class="section-head"><div><h2>Dernières publications</h2><p>Les contenus synchronisés depuis la base de données.</p></div></div>
-  <div class="grid" id="postGrid">
-   <!-- Les publications chargées depuis Supabase -->
-  </div>
+  <div class="grid" id="postGrid"></div>
  </section>
  <section class="wrap" id="images"><div class="section-head"><div><h2>Galerie d'images</h2><p>Un aperçu de notre univers visuel.</p></div></div><div class="grid"><div class="card"><div class="thumb">🌌</div><div class="card-body"><span class="tag">Inspiration</span><h3>Rêvez plus grand</h3></div></div><div class="card"><div class="thumb">🏰</div><div class="card-body"><span class="tag">Fantaisie</span><h3>Explorez l'impossible</h3></div></div><div class="card"><div class="thumb">🚀</div><div class="card-body"><span class="tag">Innovation</span><h3>Vers de nouveaux horizons</h3></div></div></div></section>
  <section class="wrap" id="actualites"><div class="follow">
@@ -72,36 +70,19 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
 
 <div class="modal" id="adminModal">
   <div class="box">
-    <h2>🔐 Espace administrateur</h2>
-    <p>Connecte-toi, puis choisis un fichier dans ton téléphone pour publier une photo ou une vidéo sur le serveur.</p>
-    <input id="adminPassword" type="password" placeholder="Mot de passe admin">
-    <button id="login" type="button" onclick="if(document.getElementById('adminPassword').value === 'Lefa8899'){ document.getElementById('adminPanel').style.display = 'block'; isAdminMode = true; document.body.classList.add('admin-mode'); renderManagePosts(); alert('Connecté avec succès !'); } else { alert('Mot de passe incorrect.'); }">Se connecter</button>
-    <button class="close" id="closeModal" type="button" onclick="document.getElementById('adminModal').classList.remove('open')">Fermer</button>
+    <h2>🚀 Espace publication</h2>
+    <p>Choisis un fichier dans ton téléphone, mets un titre et publie directement sur le serveur !</p>
+    <button class="close" id="closeModal" type="button" onclick="document.getElementById('adminModal').classList.remove('open')" style="float:right;">Fermer ✕</button>
     
-    <div id="adminPanel" style="display:none; margin-top:15px;">
-      <div class="admin-tools active" id="dashboardTools">
-        <h3>⚙️ Tableau de bord</h3>
-        <p class="notice">Depuis cet espace, tu peux modifier les textes du site et gérer les publications affichées.</p>
-        <label class="field-label" for="editHeroTitle">Titre de la page d'accueil</label>
-        <input id="editHeroTitle" value="AU-DELÀ DE L'IMAGINATION">
-        <label class="field-label" for="editHeroText">Description de l'accueil</label>
-        <textarea id="editHeroText">Découvrez un univers extraordinaire de vidéos, d'images, d'histoires et d'inspirations. Ici, la créativité n'a pas de limites !</textarea>
-        <label class="field-label" for="editFooterText">Texte du pied de page</label>
-        <input id="editFooterText" value="AU-DELÀ DE L'IMAGINATION">
-        <button id="saveSiteSettings" type="button">Enregistrer les textes</button>
-        <button id="showManagePosts" type="button">Gérer les publications</button>
-        <div id="managePostsList"></div>
-      </div>
-      <hr>
+    <div id="adminPanel" style="margin-top:15px;">
       <h3>Ajouter une publication sur Supabase</h3>
       <input id="newTitle" placeholder="Titre de la publication">
       <textarea id="newDescription" placeholder="Écris une description..."></textarea>
-      <select id="newCategory" style="width:100%;padding:12px;background:#071629;color:white;border-radius:9px"><option>Vidéos IA</option><option>Humour</option><option>Actualités</option><option>Créations artistiques</option><option>Histoires</option></select>
+      <select id="newCategory" style="width:100%;padding:12px;background:#071629;color:white;border-radius:9px;margin:7px 0;"><option>Vidéos IA</option><option>Humour</option><option>Actualités</option><option>Créations artistiques</option><option>Histoires</option></select>
       <label for="newMedia" style="display:block;margin:12px 0 8px;font-weight:bold;color:#f5c451">📷 1. Choisir une photo ou une vidéo</label>
       <input id="newMedia" type="file" accept="image/*,video/*" style="width:100%;padding:10px;background:#071629;color:white;border:1px solid #ffffff25;border-radius:9px">
       <div id="mediaPreview" style="margin:10px 0"></div>
-      <p style="font-size:12px;color:#a9b8cc">2. Ajoute un titre et une description, puis appuie sur « Publier sur le serveur ».</p>
-      <button id="addPost" type="button">Publier sur le serveur</button>
+      <button id="addPost" type="button" style="width:100%;margin-top:10px;background:var(--gold);color:#152039;font-weight:bold;padding:12px;border:0;border-radius:9px;cursor:pointer;">Publier sur le serveur</button>
     </div>
   </div>
 </div>
@@ -109,16 +90,13 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
 <div class="modal" id="resultModal" aria-hidden="true"><div class="box detail-box"><button class="close" id="closeResult" style="float:right" type="button">Fermer ✕</button><div id="resultDetail"></div></div></div>
 
 <script>
-// CONFIGURATION SUPABASE INTÉGRÉE
 const SUPABASE_URL = 'https://zeqawxbtttsltkdtzpzf.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_zzQxURC8KVfgmjojn-5TVQ_Afps4xcJ';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 document.getElementById('year').textContent = new Date().getFullYear();
+let isAdminMode = true;
 
-let isAdminMode = false;
-
-// Charger les publications depuis Supabase
 async function fetchPosts() {
     const { data, error } = await supabase.from('posts').select('*').order('id', { ascending: false });
     const grid = document.getElementById('postGrid');
@@ -126,7 +104,6 @@ async function fetchPosts() {
     grid.innerHTML = '';
     
     if (error) {
-        console.error('Erreur de chargement:', error);
         grid.innerHTML = '<p style="color:var(--gold);">Erreur de chargement de la base de données.</p>';
         return;
     }
@@ -141,12 +118,9 @@ async function fetchPosts() {
         article.className = 'card search-result-card';
         article.dataset.category = post.category;
         
-        let mediaHtml = '';
-        if (post.media_type === 'video') {
-            mediaHtml = `<div class="thumb" style="height:auto;padding:0;"><video src="${post.media_url}" controls style="width:100%;max-height:220px;object-fit:contain;background:#061020"></video></div>`;
-        } else {
-            mediaHtml = `<div class="thumb" style="height:auto;padding:0;"><img src="${post.media_url}" style="width:100%;max-height:220px;object-fit:contain;background:#061020"></div>`;
-        }
+        let mediaHtml = post.media_type === 'video' 
+            ? `<div class="thumb" style="height:auto;padding:0;"><video src="${post.media_url}" controls style="width:100%;max-height:220px;object-fit:contain;background:#061020"></video></div>`
+            : `<div class="thumb" style="height:auto;padding:0;"><img src="${post.media_url}" style="width:100%;max-height:220px;object-fit:contain;background:#061020"></div>`;
 
         article.innerHTML = `
             ${mediaHtml}
@@ -156,7 +130,7 @@ async function fetchPosts() {
                 <p>${post.description || ''}</p>
                 <div class="actions">
                     <button class="like" type="button">♡ J'aime <span>0</span></button>
-                    ${isAdminMode ? `<button class="delete-btn" type="button" onclick="deletePost(${post.id})" style="background:#263b58;color:white;border:1px solid #ffffff25;border-radius:9px;padding:6px 10px;cursor:pointer">🗑️ Supprimer</button>` : ''}
+                    <button class="delete-btn" type="button" onclick="deletePost(${post.id})" style="background:#263b58;color:white;border:1px solid #ffffff25;border-radius:9px;padding:6px 10px;cursor:pointer">🗑️ Supprimer</button>
                 </div>
             </div>
         `;
@@ -170,7 +144,6 @@ async function fetchPosts() {
                 likeBtn.firstChild.textContent = n ? "♡ J'aime " : "♥ J'aime ";
             };
         }
-        
         grid.appendChild(article);
     });
 }
@@ -179,84 +152,92 @@ fetchPosts();
 document.querySelectorAll('.category').forEach(c => c.onclick = () => {
     document.querySelectorAll('.category').forEach(x => x.classList.remove('active'));
     c.classList.add('active');
-    if(typeof searchInput !== 'undefined') searchInput.value = '';
-    document.getElementById('searchMessage')?.remove();
     const filter = c.dataset.filter;
     document.querySelectorAll('#postGrid .card, #images .card').forEach(card => {
         card.style.display = filter === 'tout' || card.dataset.category === filter ? '' : 'none';
     });
 });
 
-const searchInput = document.getElementById('searchInput');
-function normalizeSearchText(value){
-  return (value || '').toString().toLocaleLowerCase('fr')
-    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-    .replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
-}
-function runSiteSearch(shouldScroll=false){
-  const query = normalizeSearchText(searchInput.value);
-  const words = query.split(' ').filter(Boolean);
-  const cards = [...document.querySelectorAll('#postGrid .card, #images .card')];
-  let found = 0;
-
-  cards.forEach(card=>{
-    const searchable = normalizeSearchText(card.textContent);
-    const match = words.length === 0 || words.every(word => searchable.includes(word));
-    card.style.display = match ? '' : 'none';
-    card.classList.toggle('search-result-card', !!query && match);
-    if(match && words.length) found++;
-  });
-
-  let message = document.getElementById('searchMessage');
-  if(!message){
-    message = document.createElement('p');
-    message.id = 'searchMessage';
-    message.style.cssText = 'color:#f5c451;margin:12px 0;font-weight:bold';
-    document.getElementById('videos').insertBefore(message, document.getElementById('postGrid'));
-  }
-  message.textContent = words.length
-    ? (found ? found + ' résultat(s) trouvé(s). Appuie sur une publication pour l’ouvrir.' : 'Aucun résultat.')
-    : '';
-
-  if(shouldScroll && message){
-    message.scrollIntoView({behavior:'smooth', block:'center'});
-  }
-}
-if(document.getElementById('searchForm')) {
-    document.getElementById('searchForm').addEventListener('submit', e => { e.preventDefault(); runSiteSearch(true); });
-}
-if(searchInput) {
-    searchInput.addEventListener('input', () => runSiteSearch(false));
+const mediaInput = document.getElementById('newMedia');
+const mediaPreview = document.getElementById('mediaPreview');
+let selectedMediaUrl = '';
+if(mediaInput) {
+    mediaInput.addEventListener('change', () => {
+      if(selectedMediaUrl) URL.revokeObjectURL(selectedMediaUrl);
+      if(mediaPreview) mediaPreview.innerHTML = '';
+      const file = mediaInput.files && mediaInput.files[0];
+      if(!file) return;
+      selectedMediaUrl = URL.createObjectURL(file);
+      const preview = file.type.startsWith('video/') ? document.createElement('video') : document.createElement('img');
+      preview.src = selectedMediaUrl;
+      preview.style.cssText = 'width:100%;max-height:220px;object-fit:contain;border-radius:10px;background:#061020';
+      if(preview.tagName === 'VIDEO'){ preview.controls = true; preview.playsInline = true; }
+      if(mediaPreview) mediaPreview.appendChild(preview);
+    });
 }
 
-const resultModal = document.getElementById('resultModal');
-const resultDetail = document.getElementById('resultDetail');
-function openSearchResult(card){
-  resultDetail.innerHTML = '';
-  const media = card.querySelector('.thumb img, .thumb video');
-  if(media){
-    const copy = media.cloneNode(true);
-    copy.className = 'detail-media';
-    if(copy.tagName === 'VIDEO'){ copy.controls = true; copy.autoplay = false; }
-    resultDetail.appendChild(copy);
-  } else {
-    const thumb = card.querySelector('.thumb');
-    if(thumb){
-      const visual = document.createElement('div');
-      visual.className = 'thumb';
-      visual.style.cssText = 'height:180px;border-radius:12px;margin:12px 0';
-      visual.textContent = thumb.textContent;
-      resultDetail.appendChild(visual);
+const addPostBtn = document.getElementById('addPost');
+if(addPostBtn) {
+    addPostBtn.onclick = async () => {
+        const title = document.getElementById('newTitle').value.trim();
+        const description = document.getElementById('newDescription').value.trim();
+        const category = document.getElementById('newCategory').value;
+        const file = mediaInput && mediaInput.files[0];
+
+        if (!title || !file) {
+            alert('Veuillez ajouter un titre et choisir un fichier média.');
+            return;
+        }
+
+        alert('Envoi en cours sur le serveur, veuillez patienter...');
+
+        const fileName = `${Date.now()}_${file.name}`;
+        const { data: uploadData, error: uploadError } = await supabase.storage.from('media').upload(fileName, file);
+
+        if (uploadError) {
+            alert('Erreur lors de l\'upload du fichier : ' + uploadError.message);
+            return;
+        }
+
+        const { data: publicUrlData } = supabase.storage.from('media').getPublicUrl(fileName);
+        const media_url = publicUrlData.publicUrl;
+        const media_type = file.type.startsWith('video/') ? 'video' : 'image';
+
+        const { error: dbError } = await supabase.from('posts').insert([{
+            title,
+            description,
+            category,
+            media_url,
+            media_type
+        }]);
+
+        if (dbError) {
+            alert('Erreur lors de l\'enregistrement dans la base de données : ' + dbError.message);
+            return;
+        }
+
+        alert('Publication ajoutée avec succès sur le site en ligne !');
+        document.getElementById('adminModal').classList.remove('open');
+        document.getElementById('newTitle').value = '';
+        document.getElementById('newDescription').value = '';
+        mediaInput.value = '';
+        if(mediaPreview) mediaPreview.innerHTML = '';
+        fetchPosts();
+    };
+}
+
+async function deletePost(id) {
+    if(confirm('Voulez-vous vraiment supprimer définitivement cette publication ?')) {
+        const { error } = await supabase.from('posts').delete().eq('id', id);
+        if(error) {
+            alert('Erreur lors de la suppression : ' + error.message);
+        } else {
+            alert('Publication supprimée.');
+            fetchPosts();
+        }
     }
-  }
-  const tag = card.querySelector('.tag');
-  const title = card.querySelector('h3');
-  const description = card.querySelector('p');
-  if(tag){ const t = document.createElement('span'); t.className = 'tag'; t.textContent = tag.textContent; resultDetail.appendChild(t); }
-  if(title){ const h = document.createElement('h2'); h.textContent = title.textContent; resultDetail.appendChild(h); }
-  if(description){ const p = document.createElement('p'); p.textContent = description.textContent; p.style.color = 'var(--muted)'; resultDetail.appendChild(p); }
-  if(resultModal) resultModal.classList.add('open');
 }
-document.addEventListener('click', e => {
-  const card = e.target.closest('.search-result-card');
-  if(card && !e.target.closest('button, i
+</script>
+</body>
+ </html>
+ 
