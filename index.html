@@ -54,11 +54,12 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
   </div>
  </section>
  <section class="wrap" id="videos">
-  <div class="section-head"><div><h2>Publications en ligne</h2><p>Les contenus synchronisés depuis la base de données.</p></div></div>
+  <div class="section-head"><div><h2>Dernières publications</h2><p>Les contenus synchronisés depuis la base de données.</p></div></div>
   <div class="grid" id="postGrid">
-    <!-- Les publications chargées depuis Supabase -->
+   <!-- Les publications chargées depuis Supabase -->
   </div>
  </section>
+ <section class="wrap" id="images"><div class="section-head"><div><h2>Galerie d'images</h2><p>Un aperçu de notre univers visuel.</p></div></div><div class="grid"><div class="card"><div class="thumb">🌌</div><div class="card-body"><span class="tag">Inspiration</span><h3>Rêvez plus grand</h3></div></div><div class="card"><div class="thumb">🏰</div><div class="card-body"><span class="tag">Fantaisie</span><h3>Explorez l'impossible</h3></div></div><div class="card"><div class="thumb">🚀</div><div class="card-body"><span class="tag">Innovation</span><h3>Vers de nouveaux horizons</h3></div></div></div></section>
  <section class="wrap" id="actualites"><div class="follow">
   <h2>❤️ Rejoignez notre univers</h2>
   <p>Découvrez nos nouvelles publications et partagez vos impressions dans les commentaires.</p>
@@ -69,14 +70,28 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
 </main>
 <footer>© <span id="year"></span> <strong>AU-DELÀ DE L'IMAGINATION</strong> — Tous droits réservés.</footer>
 
-<div class="modal" id="adminModal"><div class="box"><h2>🔐 Espace administrateur</h2><p>Connecte-toi pour publier une photo ou une vidéo sur le site en ligne.</p><input id="adminPassword" type="password" placeholder="Mot de passe admin"><button id="login" type="button">Se connecter</button><button class="close" id="closeModal" type="button">Fermer</button><div id="adminPanel" hidden>
-<hr><h3>Ajouter une publication</h3>
+<div class="modal" id="adminModal"><div class="box"><h2>🔐 Espace administrateur</h2><p>Connecte-toi, puis choisis un fichier dans ton téléphone pour publier une photo ou une vidéo sur le serveur.</p><input id="adminPassword" type="password" placeholder="Mot de passe admin"><button id="login" type="button">Se connecter</button><button class="close" id="closeModal" type="button">Fermer</button><div id="adminPanel" hidden>
+<div class="admin-tools active" id="dashboardTools">
+<h3>⚙️ Tableau de bord</h3>
+<p class="notice">Depuis cet espace, tu peux modifier les textes du site et gérer les publications affichées.</p>
+<label class="field-label" for="editHeroTitle">Titre de la page d'accueil</label>
+<input id="editHeroTitle" value="AU-DELÀ DE L'IMAGINATION">
+<label class="field-label" for="editHeroText">Description de l'accueil</label>
+<textarea id="editHeroText">Découvrez un univers extraordinaire de vidéos, d'images, d'histoires et d'inspirations. Ici, la créativité n'a pas de limites !</textarea>
+<label class="field-label" for="editFooterText">Texte du pied de page</label>
+<input id="editFooterText" value="AU-DELÀ DE L'IMAGINATION">
+<button id="saveSiteSettings" type="button">Enregistrer les textes</button>
+<button id="showManagePosts" type="button">Gérer les publications</button>
+<div id="managePostsList"></div>
+</div>
+<hr><h3>Ajouter une publication sur Supabase</h3>
 <input id="newTitle" placeholder="Titre de la publication">
 <textarea id="newDescription" placeholder="Écris une description..."></textarea>
 <select id="newCategory" style="width:100%;padding:12px;background:#071629;color:white;border-radius:9px"><option>Vidéos IA</option><option>Humour</option><option>Actualités</option><option>Créations artistiques</option><option>Histoires</option></select>
-<label for="newMedia" style="display:block;margin:12px 0 8px;font-weight:bold;color:#f5c451">📷 Choisir une photo ou une vidéo</label>
+<label for="newMedia" style="display:block;margin:12px 0 8px;font-weight:bold;color:#f5c451">📷 1. Choisir une photo ou une vidéo</label>
 <input id="newMedia" type="file" accept="image/*,video/*" style="width:100%;padding:10px;background:#071629;color:white;border:1px solid #ffffff25;border-radius:9px">
 <div id="mediaPreview" style="margin:10px 0"></div>
+<p style="font-size:12px;color:#a9b8cc">2. Ajoute un titre et une description, puis appuie sur « Publier sur le serveur ».</p>
 <button id="addPost" type="button">Publier sur le serveur</button></div></div></div>
 
 <div class="modal" id="resultModal" aria-hidden="true"><div class="box detail-box"><button class="close" id="closeResult" style="float:right" type="button">Fermer ✕</button><div id="resultDetail"></div></div></div>
@@ -88,20 +103,15 @@ const SUPABASE_ANON_KEY = 'sb_publishable_zzQxURC8KVfgmjojn-5TVQ_Afps4xcJ';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 document.getElementById('year').textContent = new Date().getFullYear();
-
 const modal = document.getElementById('adminModal');
 const adminOpenBtn = document.getElementById('adminOpen');
 const closeModalBtn = document.getElementById('closeModal');
 
 if(adminOpenBtn) {
-    adminOpenBtn.onclick = () => {
-        if(modal) modal.classList.add('open');
-    };
+    adminOpenBtn.onclick = () => { if(modal) modal.classList.add('open'); };
 }
 if(closeModalBtn) {
-    closeModalBtn.onclick = () => {
-        if(modal) modal.classList.remove('open');
-    };
+    closeModalBtn.onclick = () => { if(modal) modal.classList.remove('open'); };
 }
 
 let isAdminMode = false;
@@ -113,13 +123,16 @@ if(loginBtn) {
             document.getElementById('adminPanel').hidden = false;
             isAdminMode = true;
             document.body.classList.add('admin-mode');
-            alert('Connecté avec succès ! Tu peux maintenant ajouter des publications.');
+            document.querySelectorAll('#postGrid .card, #images .card').forEach(addManageButtons);
+            renderManagePosts();
+            alert('Connecté avec succès ! Tableau de bord ouvert.');
         } else {
             alert('Mot de passe incorrect.');
         }
     };
 }
 
+// Charger les publications depuis Supabase
 async function fetchPosts() {
     const { data, error } = await supabase.from('posts').select('*').order('id', { ascending: false });
     const grid = document.getElementById('postGrid');
@@ -157,85 +170,103 @@ async function fetchPosts() {
                 <p>${post.description || ''}</p>
                 <div class="actions">
                     <button class="like" type="button">♡ J'aime <span>0</span></button>
-                    ${isAdminMode ? `<button class="delete-btn" type="button" onclick="deletePost(${post.id})">🗑️ Supprimer</button>` : ''}
+                    ${isAdminMode ? `<button class="delete-btn" type="button" onclick="deletePost(${post.id})" style="background:#263b58;color:white;border:1px solid #ffffff25;border-radius:9px;padding:6px 10px;cursor:pointer">🗑️ Supprimer</button>` : ''}
                 </div>
             </div>
         `;
+        
+        // Gestion du bouton J'aime
+        const likeBtn = article.querySelector('.like');
+        if(likeBtn) {
+            likeBtn.onclick = () => {
+                let s = likeBtn.querySelector('span');
+                let n = Number(s.textContent);
+                s.textContent = n ? 0 : 1;
+                likeBtn.firstChild.textContent = n ? "♡ J'aime " : "♥ J'aime ";
+            };
+        }
+        
         grid.appendChild(article);
     });
 }
 fetchPosts();
 
-const addPostBtn = document.getElementById('addPost');
-if(addPostBtn) {
-    addPostBtn.onclick = async () => {
-        const title = document.getElementById('newTitle').value.trim();
-        const description = document.getElementById('newDescription').value.trim();
-        const category = document.getElementById('newCategory').value;
-        const fileInput = document.getElementById('newMedia');
-        const file = fileInput.files[0];
-
-        if (!title || !file) {
-            alert('Veuillez ajouter un titre et choisir un fichier média.');
-            return;
-        }
-
-        alert('Envoi en cours, veuillez patienter...');
-
-        const fileName = `${Date.now()}_${file.name}`;
-        const { data: uploadData, error: uploadError } = await supabase.storage.from('media').upload(fileName, file);
-
-        if (uploadError) {
-            alert('Erreur lors de l\'upload du fichier : ' + uploadError.message);
-            return;
-        }
-
-        const { data: publicUrlData } = supabase.storage.from('media').getPublicUrl(fileName);
-        const media_url = publicUrlData.publicUrl;
-        const media_type = file.type.startsWith('video/') ? 'video' : 'image';
-
-        const { error: dbError } = await supabase.from('posts').insert([{
-            title,
-            description,
-            category,
-            media_url,
-            media_type
-        }]);
-
-        if (dbError) {
-            alert('Erreur lors de l\'enregistrement : ' + dbError.message);
-            return;
-        }
-
-        alert('Publication ajoutée avec succès !');
-        if(modal) modal.classList.remove('open');
-        document.getElementById('newTitle').value = '';
-        document.getElementById('newDescription').value = '';
-        fileInput.value = '';
-        document.getElementById('mediaPreview').innerHTML = '';
-        fetchPosts();
-    };
-}
-
-async function deletePost(id) {
-    if(confirm('Voulez-vous vraiment supprimer cette publication ?')) {
-        const { error } = await supabase.from('posts').delete().eq('id', id);
-        if(error) {
-            alert('Erreur lors de la suppression');
-        } else {
-            fetchPosts();
-        }
-    }
-}
-
+// Interactions de base (recherche, catégories, modale de détail)
 document.querySelectorAll('.category').forEach(c => c.onclick = () => {
     document.querySelectorAll('.category').forEach(x => x.classList.remove('active'));
     c.classList.add('active');
+    if(typeof searchInput !== 'undefined') searchInput.value = '';
+    document.getElementById('searchMessage')?.remove();
     const filter = c.dataset.filter;
-    document.querySelectorAll('#postGrid .card').forEach(card => {
+    document.querySelectorAll('#postGrid .card, #images .card').forEach(card => {
         card.style.display = filter === 'tout' || card.dataset.category === filter ? '' : 'none';
     });
 });
-</script>
-</body>
-</html>
+
+const searchInput = document.getElementById('searchInput');
+function normalizeSearchText(value){
+  return (value || '').toString().toLocaleLowerCase('fr')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
+}
+function runSiteSearch(shouldScroll=false){
+  const query = normalizeSearchText(searchInput.value);
+  const words = query.split(' ').filter(Boolean);
+  const cards = [...document.querySelectorAll('#postGrid .card, #images .card')];
+  let found = 0;
+
+  cards.forEach(card=>{
+    const searchable = normalizeSearchText(card.textContent);
+    const match = words.length === 0 || words.every(word => searchable.includes(word));
+    card.style.display = match ? '' : 'none';
+    card.classList.toggle('search-result-card', !!query && match);
+    if(match && words.length) found++;
+  });
+
+  let message = document.getElementById('searchMessage');
+  if(!message){
+    message = document.createElement('p');
+    message.id = 'searchMessage';
+    message.style.cssText = 'color:#f5c451;margin:12px 0;font-weight:bold';
+    document.getElementById('videos').insertBefore(message, document.getElementById('postGrid'));
+  }
+  message.textContent = words.length
+    ? (found ? found + ' résultat(s) trouvé(s). Appuie sur une publication pour l’ouvrir.' : 'Aucun résultat.')
+    : '';
+
+  if(shouldScroll && message){
+    message.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+if(document.getElementById('searchForm')) {
+    document.getElementById('searchForm').addEventListener('submit', e => { e.preventDefault(); runSiteSearch(true); });
+}
+if(searchInput) {
+    searchInput.addEventListener('input', () => runSiteSearch(false));
+}
+
+// Fenêtre de détail au clic sur un élément
+const resultModal = document.getElementById('resultModal');
+const resultDetail = document.getElementById('resultDetail');
+function openSearchResult(card){
+  resultDetail.innerHTML = '';
+  const media = card.querySelector('.thumb img, .thumb video');
+  if(media){
+    const copy = media.cloneNode(true);
+    copy.className = 'detail-media';
+    if(copy.tagName === 'VIDEO'){ copy.controls = true; copy.autoplay = false; }
+    resultDetail.appendChild(copy);
+  } else {
+    const thumb = card.querySelector('.thumb');
+    if(thumb){
+      const visual = document.createElement('div');
+      visual.className = 'thumb';
+      visual.style.cssText = 'height:180px;border-radius:12px;margin:12px 0';
+      visual.textContent = thumb.textContent;
+      resultDetail.appendChild(visual);
+    }
+  }
+  const tag = card.querySelector('.tag');
+  const title = card.querySelector('h3');
+  const description = card.querySelector('p');
+  if(tag){ const t = document.createElement('span'); t.className = 'tag'; t.textCo
