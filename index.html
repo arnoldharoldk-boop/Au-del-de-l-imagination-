@@ -34,7 +34,7 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
  <div class="top">
   <a class="brand" href="#"><span class="logo">∞</span><span>AU-DELÀ DE<br><span>L'IMAGINATION</span></span></a>
   <form class="search" id="searchForm"><input id="searchInput" type="search" placeholder="Rechercher une vidéo, une image..."><button type="submit">⌕</button></form>
-  <button class="admin" id="adminOpen" type="button">Espace admin</button>
+  <button class="admin" id="adminOpen" type="button" onclick="document.getElementById('adminModal').classList.add('open')">Espace admin</button>
  </div>
  <nav><a href="#accueil">Accueil</a><a href="#videos">Vidéos</a><a href="#images">Images</a><a href="#actualites">Actualités</a><a href="#apropos">À propos</a><a href="#contact">Contact</a></nav>
 </header>
@@ -70,7 +70,7 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
 </main>
 <footer>© <span id="year"></span> <strong>AU-DELÀ DE L'IMAGINATION</strong> — Tous droits réservés.</footer>
 
-<div class="modal" id="adminModal"><div class="box"><h2>🔐 Espace administrateur</h2><p>Connecte-toi, puis choisis un fichier dans ton téléphone pour publier une photo ou une vidéo sur le serveur.</p><input id="adminPassword" type="password" placeholder="Mot de passe admin"><button id="login" type="button">Se connecter</button><button class="close" id="closeModal" type="button">Fermer</button><div id="adminPanel" hidden>
+<div class="modal" id="adminModal"><div class="box"><h2>🔐 Espace administrateur</h2><p>Connecte-toi, puis choisis un fichier dans ton téléphone pour publier une photo ou une vidéo sur le serveur.</p><input id="adminPassword" type="password" placeholder="Mot de passe admin"><button id="login" type="button">Se connecter</button><button class="close" id="closeModal" type="button" onclick="document.getElementById('adminModal').classList.remove('open')">Fermer</button><div id="adminPanel" hidden>
 <div class="admin-tools active" id="dashboardTools">
 <h3>⚙️ Tableau de bord</h3>
 <p class="notice">Depuis cet espace, tu peux modifier les textes du site et gérer les publications affichées.</p>
@@ -103,19 +103,6 @@ const SUPABASE_ANON_KEY = 'sb_publishable_zzQxURC8KVfgmjojn-5TVQ_Afps4xcJ';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 document.getElementById('year').textContent = new Date().getFullYear();
-const modal = document.getElementById('adminModal');
-const adminOpenBtn = document.getElementById('adminOpen');
-const closeModalBtn = document.getElementById('closeModal');
-
-if(adminOpenBtn) {
-    adminOpenBtn.onclick = (e) => {
-        if(e) e.preventDefault();
-        if(modal) modal.classList.add('open');
-    };
-}
-if(closeModalBtn) {
-    closeModalBtn.onclick = () => { if(modal) modal.classList.remove('open'); };
-}
 
 let isAdminMode = false;
 const loginBtn = document.getElementById('login');
@@ -270,4 +257,6 @@ function openSearchResult(card){
   const title = card.querySelector('h3');
   const description = card.querySelector('p');
   if(tag){ const t = document.createElement('span'); t.className = 'tag'; t.textContent = tag.textContent; resultDetail.appendChild(t); }
-  if(title){ const h = docume
+  if(title){ const h = document.createElement('h2'); h.textContent = title.textContent; resultDetail.appendChild(h); }
+  if(description){ const p = document.createElement('p'); p.textContent = description.textContent; p.style.color = 'var(--muted)'; resultDetail.appendChild(p); }
+  if(resultModal) resultMod
