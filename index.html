@@ -95,7 +95,6 @@ const SUPABASE_ANON_KEY = 'sb_publishable_zzQxURC8KVfgmjojn-5TVQ_Afps4xcJ';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 document.getElementById('year').textContent = new Date().getFullYear();
-let isAdminMode = true;
 
 async function fetchPosts() {
     const { data, error } = await supabase.from('posts').select('*').order('id', { ascending: false });
@@ -179,23 +178,22 @@ if(mediaInput) {
 const addPostBtn = document.getElementById('addPost');
 if(addPostBtn) {
     addPostBtn.onclick = async () => {
+        alert("Le clic fonctionne ! Début de l'envoi...");
         const title = document.getElementById('newTitle').value.trim();
         const description = document.getElementById('newDescription').value.trim();
         const category = document.getElementById('newCategory').value;
         const file = mediaInput && mediaInput.files[0];
 
         if (!title || !file) {
-            alert('Veuillez ajouter un titre et choisir un fichier média.');
+            alert('Erreur : Veuillez ajouter un titre et choisir un fichier média.');
             return;
         }
-
-        alert('Envoi en cours sur le serveur, veuillez patienter...');
 
         const fileName = `${Date.now()}_${file.name}`;
         const { data: uploadData, error: uploadError } = await supabase.storage.from('media').upload(fileName, file);
 
         if (uploadError) {
-            alert('Erreur lors de l\'upload du fichier : ' + uploadError.message);
+            alert('Erreur Storage : ' + uploadError.message);
             return;
         }
 
@@ -212,11 +210,11 @@ if(addPostBtn) {
         }]);
 
         if (dbError) {
-            alert('Erreur lors de l\'enregistrement dans la base de données : ' + dbError.message);
+            alert('Erreur Database : ' + dbError.message);
             return;
         }
 
-        alert('Publication ajoutée avec succès sur le site en ligne !');
+        alert('Publication ajoutée avec succès !');
         document.getElementById('adminModal').classList.remove('open');
         document.getElementById('newTitle').value = '';
         document.getElementById('newDescription').value = '';
