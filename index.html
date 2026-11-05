@@ -74,18 +74,19 @@ footer{margin-top:50px;border-top:1px solid #ffffff18;padding:28px 20px;text-ali
     <p>Choisis un fichier dans ton téléphone, mets un titre et publie directement sur le serveur !</p>
     <button class="close" id="closeModal" type="button" onclick="document.getElementById('adminModal').classList.remove('open')" style="float:right;">Fermer ✕</button>
     
-    <div id="adminPanel" style="margin-top:15px;">
+    <!-- TRANSFORMÉ EN VRAI FORMULAIRE HTML -->
+    <form id="uploadForm" onsubmit="soumettreFormulaireSupabase(event)" style="margin-top:15px;">
       <h3>Ajouter une publication sur Supabase</h3>
-      <input id="newTitle" placeholder="Titre de la publication">
+      <input id="newTitle" placeholder="Titre de la publication" required>
       <textarea id="newDescription" placeholder="Écris une description..."></textarea>
       <select id="newCategory" style="width:100%;padding:12px;background:#071629;color:white;border-radius:9px;margin:7px 0;"><option>Vidéos IA</option><option>Humour</option><option>Actualités</option><option>Créations artistiques</option><option>Histoires</option></select>
       <label for="newMedia" style="display:block;margin:12px 0 8px;font-weight:bold;color:#f5c451">📷 1. Choisir une photo ou une vidéo</label>
-      <input id="newMedia" type="file" accept="image/*,video/*" style="width:100%;padding:10px;background:#071629;color:white;border:1px solid #ffffff25;border-radius:9px">
+      <input id="newMedia" type="file" accept="image/*,video/*" required style="width:100%;padding:10px;background:#071629;color:white;border:1px solid #ffffff25;border-radius:9px">
       <div id="mediaPreview" style="margin:10px 0"></div>
       
-      <!-- BOUTON AVEC ONCLICK DIRECT ULTRA ROBUSTE -->
-      <button type="button" onclick="executerPublicationTotale()" style="width:100%;margin-top:10px;background:var(--gold);color:#152039;font-weight:bold;padding:12px;border:0;border-radius:9px;cursor:pointer;">Publier sur le serveur</button>
-    </div>
+      <!-- BOUTON DE SOUMISSION NATIF -->
+      <button type="submit" style="width:100%;margin-top:10px;background:var(--gold);color:#152039;font-weight:bold;padding:12px;border:0;border-radius:9px;cursor:pointer;">Publier sur le serveur</button>
+    </form>
   </div>
 </div>
 
@@ -177,10 +178,12 @@ if(mediaInput) {
     });
 }
 
-// FONCTION GLOBALE UNIQUE DÉCLENCHÉE DIRECTEMENT PAR LE HTML
-async function executerPublicationTotale() {
+// SOUMMISSION DU FORMULAIRE STANDARD (GARANTI SUR MOBILE)
+async function soumettreFormulaireSupabase(event) {
+    event.preventDefault(); // Empêche le rechargement brutal de la page
+    
     try {
-        alert("🚀 Clic détecté ! Lancement de l'envoi...");
+        alert("🚀 Formulaire soumis ! Début de l'envoi...");
         const title = document.getElementById('newTitle').value.trim();
         const description = document.getElementById('newDescription').value.trim();
         const category = document.getElementById('newCategory').value;
@@ -188,11 +191,11 @@ async function executerPublicationTotale() {
         const file = fileInput && fileInput.files[0];
 
         if (!title || !file) {
-            alert('❌ Erreur : Il manque un titre ou un fichier média !');
+            alert('❌ Veuillez remplir le titre et choisir un fichier.');
             return;
         }
 
-        alert('⏳ Envoi du fichier sur Supabase en cours...');
+        alert('⏳ Envoi du fichier sur Supabase...');
         const fileName = `${Date.now()}_${file.name}`;
         const { data: uploadData, error: uploadError } = await supabase.storage.from('media').upload(fileName, file);
 
@@ -219,15 +222,13 @@ async function executerPublicationTotale() {
             return;
         }
 
-        alert('🎉 Succès total ! Ta publication est en ligne.');
+        alert('🎉 Succès total ! Publication ajoutée.');
         document.getElementById('adminModal').classList.remove('open');
-        document.getElementById('newTitle').value = '';
-        document.getElementById('newDescription').value = '';
-        fileInput.value = '';
+        document.getElementById('uploadForm').reset();
         if(mediaPreview) mediaPreview.innerHTML = '';
         fetchPosts();
     } catch (err) {
-        alert('💥 Erreur critique inattendue : ' + err.message);
+        alert('💥 Erreur critique : ' + err.message);
     }
 }
 
@@ -244,5 +245,5 @@ async function deletePost(id) {
 }
 </script>
 </body>
- </html>
+    </html>
  
